@@ -17,7 +17,6 @@ pip install jax==0.4.30 jaxlib==0.4.30 jax-cuda12-plugin==0.4.30 jax-cuda12-pjrt
 pip install tqdm jraph matplotlib tqdm optax==0.2.2
 pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
 pip install flax==0.8.1 igraph unipath wandb==0.15.0
-pip install jax==0.4.30 jaxlib==0.4.30 jax-cuda12-plugin==0.4.30 jax-cuda12-pjrt==0.4.30
 ```
 
 ## Getting started
