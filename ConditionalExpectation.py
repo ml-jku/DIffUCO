@@ -119,6 +119,7 @@ class ConditionalExpectation:
         self.__init_wandb()
 
         self.model = TrainMeanField(self.config, load_wandb_id = self.wandb_id, eval_step_factor = self.eval_step_factor)
+        self.model.params = self.params
 
 
 
