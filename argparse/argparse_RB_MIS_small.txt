@@ -1,0 +1,11 @@
+
+
+### MULTI GPU tests FINAL RUN
+python argparse_ray_main.py --multi_gpu --GPUs 6 7 --IsingMode RB_iid_small --EnergyFunction MIS --mode Diffusion --lr 0.002 --n_GNN_layers 8 --n_hidden_neurons 64 --N_anneal 4000 --temps 0.4 --n_basis_states 10 --n_diffusion_steps 5 --batch_size 25  --beta_factor 1.  --relaxed --seed 123
+
+python argparse_ray_main.py --multi_gpu --GPUs 0 --IsingMode RB_iid_small --EnergyFunction MIS --mode Diffusion --lr 0.002 --n_GNN_layers 8 --n_hidden_neurons 64 --N_anneal 4000 --temps 0.4 --n_basis_states 10 --n_diffusion_steps 5 --batch_size 30  --beta_factor 1.  --relaxed --seed 124
+
+python argparse_ray_main.py --multi_gpu --GPUs 1 --IsingMode RB_iid_small --EnergyFunction MIS --mode Diffusion --lr 0.002 --n_GNN_layers 8 --n_hidden_neurons 64 --N_anneal 4000 --temps 0.4 --n_basis_states 10 --n_diffusion_steps 5 --batch_size 30  --beta_factor 1.  --relaxed --seed 125
+
+
+python argparse_ray_main.py --multi_gpu --GPUs 6 --IsingMode RB_iid_small --EnergyFunction MIS --mode Diffusion --lr 0.002 --n_GNN_layers 8 --n_hidden_neurons 64 --N_anneal 4000 --temps 0.2 --n_basis_states 10 --n_diffusion_steps 5 --batch_size 30  --beta_factor 1.  --relaxed --seed 123

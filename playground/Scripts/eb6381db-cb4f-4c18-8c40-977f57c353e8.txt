@@ -1,0 +1,22 @@
+#!/bin/bash
+
+#SBATCH --account DD-23-97
+#SBATCH --partition qgpu
+#SBATCH --time 2-00:00:00
+#SBATCH --nodes=1
+#SBATCH --gpus-per-node 1
+#SBATCH --tasks-per-node=1
+#SBATCH -J RB_iid_100_MIS
+#SBATCH -o RB_iid_100_MIS_Forward_KL_12_logfile.out
+#SBATCH -e RB_iid_100_MIS_Forward_KL_12_logfile.err
+#SBATCH --mail-type=BEGIN,ABORT,END
+#SBATCH --mail-user=sebastian.sanokowski@jku.at
+
+source activate rayjay_clone
+cd ~/code/DiffUCO/
+conda activate rayjay_clone
+
+nvidia-smi
+
+# run script
+python argparse_ray_main.py --lrs 0.0005 --relaxed --GPUs 0  --n_GNN_layers 8 --temps 0.1 --IsingMode RB_iid_100 --EnergyFunction MIS --mode Diffusion --N_anneal 2000 --beta_factor 1. --n_diffusion_steps 12 --batch_size 70 --n_basis_states 10 --noise_potential bernoulli --multi_gpu --project_name Dataset_fixed_Forward_KL_12_Forward_KL --n_rand_nodes 3 --seed 123 --graph_mode normal --train_mode Forward_KL --inner_loop_steps 1 --diff_schedule exp --minib_diff_steps 4  --stop_epochs 1500

@@ -1,0 +1,4 @@
+RB MIS large
+
+
+python argparse_ray_main.py --lrs 0.002 --relaxed --GPUs 0 1 --n_GNN_layers 7 --temps 0.3 --IsingMode RB_iid_large --EnergyFunction MIS --mode Diffusion --N_anneal 3000 --beta_factor 1. --n_diffusion_steps 4 --batch_size 18 --n_basis_states 5 --stop_epochs 1200 --multi_gpu --seed 124

@@ -1,0 +1,36 @@
+python argparse_ray_main.py --lrs 0.001 --relaxed --GPUs 5 --n_GNN_layers 8 --temps 0.4 --IsingMode 2D_random_20 --EnergyFunction TSP --mode Diffusion --N_anneal 400 --beta_factor 1. --n_diffusion_steps 3 --batch_size 20 --n_basis_states 10 --multi_gpu --noise_potential bernoulli --no-linear_message_passing
+
+python argparse_ray_main.py --lrs 0.001 --relaxed --GPUs 0 1 --n_GNN_layers 8 --temps 1. --IsingMode 2D_random_20 --EnergyFunction TSP --mode Diffusion --N_anneal 400 --beta_factor 1. --n_diffusion_steps 3 --batch_size 20 --n_basis_states 10 --multi_gpu --noise_potential bernoulli --no-linear_message_passing
+
+
+python argparse_ray_main.py --lrs 0.002 --relaxed --GPUs 0 --n_GNN_layers 8 --temps 0.2 --IsingMode 2D_random_20 --EnergyFunction TSP --mode Diffusion --N_anneal 1000 --beta_factor 1. --n_diffusion_steps 9 --batch_size 30 --n_basis_states 10 --noise_potential categorical --multi_gpu --project_name diff_steps_ --n_rand_nodes 3 --seed 123 --graph_mode normal --train_mode PPO --inner_loop_steps 1 --diff_schedule exp
+
+
+python argparse_ray_main.py --lrs 0.0005 --relaxed --GPUs 0 --n_GNN_layers 4 --temps 0.6 --IsingMode 2D_random_20 --EnergyFunction TSP --mode Diffusion --N_anneal 1000 --beta_factor 1. --n_diffusion_steps 9 --batch_size 40 --n_basis_states 10 --noise_potential categorical --multi_gpu --project_name diff_steps_ --n_rand_nodes 3 --seed 123 --graph_mode normal --train_mode PPO --inner_loop_steps 1 --diff_schedule exp --no-linear_message_passing
+
+
+python argparse_ray_main.py --lrs 0.0005 --relaxed --GPUs 0 --n_GNN_layers 6 --temps 0.6 --IsingMode 2D_random_20 --EnergyFunction TSP --mode Diffusion --N_anneal 1000 --beta_factor 1. --n_diffusion_steps 9 --batch_size 40 --n_basis_states 10 --noise_potential categorical --multi_gpu --project_name diff_steps_ --n_rand_nodes 3 --seed 123 --graph_mode normal --train_mode PPO --inner_loop_steps 1 --diff_schedule exp --no-linear_message_passing
+
+python argparse_ray_main.py --lrs 0.001 --relaxed --GPUs 0 --n_GNN_layers 4 --temps 0.03 --IsingMode 2D_random_20 --EnergyFunction TSP --mode Diffusion --N_anneal 1000 --beta_factor 1. --n_diffusion_steps 9 --batch_size 40 --n_basis_states 10 --noise_potential categorical --multi_gpu --project_name diff_steps_ --n_rand_nodes 3 --seed 123 --graph_mode normal --train_mode PPO --inner_loop_steps 1 --diff_schedule exp --no-linear_message_passing --proj_method CE
+
+
+python argparse_ray_main.py --lrs 0.001 --relaxed --GPUs 0 --n_GNN_layers 4 --temps 0.01 --IsingMode 2D_random_20 --EnergyFunction TSP --mode Diffusion --N_anneal 1000 --beta_factor 1. --n_diffusion_steps 6 --batch_size 40 --n_basis_states 5 --noise_potential categorical --multi_gpu --project_name diff_steps_ --n_rand_nodes 0 --seed 123 --graph_mode normal --train_mode PPO --inner_loop_steps 1 --diff_schedule exp --no-linear_message_passing --proj_method CE --graph_mode TSPModel --minib_basis_sates 5
+
+MIG-6dcab994-f9fb-581b-bcd1-b97da093d3be
+
+python argparse_ray_main.py --lrs 0.001 --relaxed --GPUs MIG-6dcab994-f9fb-581b-bcd1-b97da093d3be --n_GNN_layers 4 --temps 0.01 --IsingMode 2D_random_20 --EnergyFunction TSP --mode Diffusion --N_anneal 1000 --beta_factor 1. --n_diffusion_steps 6 --batch_size 40 --n_basis_states 5 --noise_potential categorical --multi_gpu --project_name diff_steps_ --n_rand_nodes 0 --seed 123 --graph_mode normal --train_mode PPO --inner_loop_steps 1 --diff_schedule exp --no-linear_message_passing --proj_method CE --graph_mode TSPModel --minib_basis_sates 5
+
+python argparse_ray_main.py --lrs 0.002 --relaxed --GPUs 0 --n_GNN_layers 3 --temps 0.01 --IsingMode 2D_random_20 --EnergyFunction TSP --mode Diffusion --N_anneal 1000 --beta_factor 1. --n_diffusion_steps 3 --batch_size 50 --n_basis_states 10 --noise_potential categorical --multi_gpu --project_name diff_steps_ --n_rand_nodes 0 --seed 123 --graph_mode TSPModel --train_mode PPO --inner_loop_steps 1 --diff_schedule exp --no-linear_message_passing --proj_method CE
+
+python argparse_ray_main.py --lrs 0.002 --relaxed --GPUs 0 --n_GNN_layers 4 --temps 0.01 --IsingMode 2D_random_20 --EnergyFunction TSP --mode Diffusion --N_anneal 1000 --beta_factor 1. --n_diffusion_steps 6 --batch_size 60 --n_basis_states 10 --noise_potential categorical --multi_gpu --project_name diff_steps_ --n_rand_nodes 0 --seed 123 --graph_mode TSPModel --train_mode PPO --inner_loop_steps 1 --diff_schedule own --no-linear_message_passing --proj_method CE
+
+python argparse_ray_main.py --lrs 0.002 --relaxed --GPUs 4 --n_GNN_layers 4 --temps 0.01 --IsingMode 2D_random_20 --EnergyFunction TSP --mode Diffusion --N_anneal 1000 --beta_factor 1. --n_diffusion_steps 3 --batch_size 30 --n_basis_states 10 --noise_potential categorical --multi_gpu --project_name diff_steps_ --n_rand_nodes 0 --seed 123 --graph_mode TSPModel --train_mode PPO --inner_loop_steps 1 --diff_schedule own --no-linear_message_passing --proj_method CE
+
+python argparse_ray_main.py --lrs 0.002 --relaxed --GPUs MIG-6dcab994-f9fb-581b-bcd1-b97da093d3be --n_GNN_layers 3 --temps 0.01 --IsingMode 2D_random_20 --EnergyFunction TSP --mode Diffusion --N_anneal 1000 --beta_factor 1. --n_diffusion_steps 3 --batch_size 50 --n_basis_states 10 --noise_potential categorical --multi_gpu --project_name diff_steps_ --n_rand_nodes 0 --seed 123 --graph_mode normal --train_mode PPO --inner_loop_steps 1 --diff_schedule exp --no-linear_message_passing --proj_method CE
+
+
+python argparse_ray_main.py --lrs 0.001 --relaxed --GPUs MIG-6dcab994-f9fb-581b-bcd1-b97da093d3be --n_GNN_layers 4 --temps 0.01 --IsingMode 2D_random_20 --EnergyFunction TSP --mode Diffusion --N_anneal 1000 --beta_factor 1. --n_diffusion_steps 6 --batch_size 2 --n_basis_states 10 --noise_potential categorical --multi_gpu --project_name diff_steps_ --n_rand_nodes 0 --seed 123 --graph_mode normal --train_mode PPO --inner_loop_steps 1 --diff_schedule exp --no-linear_message_passing --proj_method CE --no-jit
+
+
+
+python argparse_ray_main.py --lrs 0.002 --relaxed --GPUs 4 --n_GNN_layers 3 --temps 0.01 --IsingMode 2D_random_20 --EnergyFunction TSP --mode Diffusion --N_anneal 1000 --beta_factor 1. --n_diffusion_steps 3 --batch_size 50 --n_basis_states 10 --noise_potential categorical --multi_gpu --project_name diff_steps_ --n_rand_nodes 0 --seed 123 --graph_mode TSPModel --train_mode PPO --inner_loop_steps 1 --diff_schedule exp --no-linear_message_passing --proj_method CE

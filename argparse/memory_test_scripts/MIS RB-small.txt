@@ -1,0 +1,24 @@
+
+python argparse_ray_main.py --lrs 0.001  --relaxed --GPUs MIG-c69ed117-8436-51d1-b4db-183ea0228cd6  --n_GNN_layers 8 --temps 0.1 --IsingMode RB_iid_small --EnergyFunction MIS --mode Diffusion --N_anneal 100 --beta_factor 1. --n_diffusion_steps 6 --batch_size 30 --n_basis_states 2 --noise_potential bernoulli --multi_gpu --project_name bfloat16 --n_rand_nodes 3 --seed 123 --graph_mode normal --train_mode REINFORCE --inner_loop_steps 1 --diff_schedule exp --no-bfloat16
+
+python argparse_ray_main.py --lrs 0.001  --relaxed --GPUs MIG-c6766c68-2ea4-5e48-b9d4-f0d93f1beeed --n_GNN_layers 8 --temps 0.1 --IsingMode RB_iid_small --EnergyFunction MIS --mode Diffusion --N_anneal 100 --beta_factor 1. --n_diffusion_steps 6 --batch_size 30 --n_basis_states 2 --noise_potential bernoulli --multi_gpu --project_name bfloat16 --n_rand_nodes 3 --seed 123 --graph_mode normal --train_mode REINFORCE --inner_loop_steps 1 --diff_schedule exp --bfloat16
+
+
+### ICML setting
+python argparse_ray_main.py --lrs 0.001  --relaxed --GPUs 0 1 --n_GNN_layers 8 --temps 0.1 --IsingMode RB_iid_small --EnergyFunction MIS --mode Diffusion --N_anneal 2500 --beta_factor 1. --n_diffusion_steps 6 --batch_size 30 --n_basis_states 10 --noise_potential bernoulli --multi_gpu --project_name final_runs --n_rand_nodes 3 --seed 123 --graph_mode normal --train_mode REINFORCE --inner_loop_steps 1 --diff_schedule exp
+
+##PPO
+### divide Basis states by half
+python argparse_ray_main.py --lrs 0.002 --relaxed --GPUs 2 3 --n_GNN_layers 8 --temps 0.1 --IsingMode RB_iid_small --EnergyFunction MIS --mode Diffusion --N_anneal 2500 --beta_factor 1. --n_diffusion_steps 12 --batch_size 60 --n_basis_states 5 --noise_potential bernoulli --multi_gpu --project_name final_runs --n_rand_nodes 3 --seed 123 --graph_mode normal --train_mode PPO --inner_loop_steps 1 --diff_schedule exp --minib_diff_steps 6 --minib_basis_states 5
+
+### divide epochs states by half
+python argparse_ray_main.py --lrs 0.001 --relaxed --GPUs 1 --n_GNN_layers 8 --temps 0.1 0.2 0.05 --IsingMode RB_iid_small --EnergyFunction MIS --mode Diffusion --N_anneal 250 --beta_factor 1. --n_diffusion_steps 12 --batch_size 30 --n_basis_states 10 --noise_potential bernoulli --multi_gpu --project_name memory_test --n_rand_nodes 3 --seed 123 --graph_mode normal --train_mode PPO --inner_loop_steps 1 --diff_schedule exp --minib_diff_steps 6 --minib_basis_states 10
+
+### Forward_KL
+### divide epochs states by half
+python argparse_ray_main.py --lrs 0.001 --relaxed --GPUs 2 --n_GNN_layers 8 --temps 0.1 0.2 0.05 --IsingMode RB_iid_small --EnergyFunction MIS --mode Diffusion --N_anneal 250 --beta_factor 1. --n_diffusion_steps 12 --batch_size 30 --n_basis_states 10 --noise_potential bernoulli --multi_gpu --project_name memory_test --n_rand_nodes 3 --seed 123 --graph_mode normal --train_mode Forward_KL --inner_loop_steps 1 --diff_schedule exp --minib_diff_steps 6 --minib_basis_states 10
+
+### divide Basis states by half
+python argparse_ray_main.py --lrs 0.002 0.0005 --relaxed --GPUs 3 --n_GNN_layers 8 --temps 0.1 --IsingMode RB_iid_small --EnergyFunction MIS --mode Diffusion --N_anneal 500 --beta_factor 1. --n_diffusion_steps 12 --batch_size 60 --n_basis_states 5 --noise_potential bernoulli --multi_gpu --project_name memory_test --n_rand_nodes 3 --seed 123 --graph_mode normal --train_mode Forward_KL --inner_loop_steps 1 --diff_schedule exp --minib_diff_steps 6 --minib_basis_states 5
+
+

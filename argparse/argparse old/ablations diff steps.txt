@@ -1,0 +1,76 @@
+minimal example:
+
+python argparse_ray_main.py --lrs 0.002 --relaxed --GPUs 4 --n_GNN_layers 4 --temps 0.031 --IsingMode RB_iid_100 --EnergyFunction MIS --mode Diffusion --N_anneal 2000 --beta_factor 1. --n_diffusion_steps 9 --batch_size 30 --n_basis_states 10 --noise_potential bernoulli --multi_gpu --project_name diff_steps_ --n_rand_nodes 3 --seed 123 --graph_mode normal --train_mode PPO --proj_method CE --inner_loop_steps 1 --diff_schedule own
+
+
+python argparse_ray_main.py --lrs 0.002 --relaxed --GPUs MIG-6dcab994-f9fb-581b-bcd1-b97da093d3be --n_GNN_layers 8 --temps 0.0311 --IsingMode RB_iid_100 --EnergyFunction MIS --mode Diffusion --N_anneal 2000 --beta_factor 1. --n_diffusion_steps 9 --batch_size 30 --n_basis_states 10 --noise_potential bernoulli --multi_gpu --project_name diff_steps_ --n_rand_nodes 3 --seed 123 --graph_mode normal --train_mode PPO --proj_method CE --inner_loop_steps 1 --diff_schedule own
+
+
+python argparse_ray_main.py --lrs 0.002 --relaxed --GPUs MIG-6dcab994-f9fb-581b-bcd1-b97da093d3be --n_GNN_layers 8 --temps 0.6015 --IsingMode RB_iid_100 --EnergyFunction MIS --mode Diffusion --N_anneal 2000 --beta_factor 1. --n_diffusion_steps 9 --batch_size 30 --n_basis_states 10 --noise_potential bernoulli annealed_obj --multi_gpu --project_name diff_steps_ --n_rand_nodes 3 --seed 123 --graph_mode normal --train_mode PPO --inner_loop_steps 1 --diff_schedule own
+
+python argparse_ray_main.py --lrs 0.002 --relaxed --GPUs 0 --n_GNN_layers 8 --temps 0.60133 --IsingMode RB_iid_100 --EnergyFunction MIS --mode Diffusion --N_anneal 2000 --beta_factor 1. --n_diffusion_steps 9 --batch_size 30 --n_basis_states 10 --noise_potential bernoulli --multi_gpu --project_name diff_steps_ --n_rand_nodes 3 --seed 123 --graph_mode normal --train_mode Forward_KL --inner_loop_steps 1 --diff_schedule own
+
+python argparse_ray_main.py --lrs 0.002 --relaxed --GPUs 0 --n_GNN_layers 8 --temps 0.6012 --IsingMode RB_iid_100 --EnergyFunction MIS --mode Diffusion --N_anneal 2000 --beta_factor 1. --n_diffusion_steps 6 --batch_size 30 --n_basis_states 10 --noise_potential bernoulli annealed_obj --multi_gpu --project_name diff_steps_ --n_rand_nodes 0 --seed 123 --graph_mode normal --train_mode Forward_KL
+
+python argparse_ray_main.py --lrs 0.0005 --relaxed --GPUs 7 --n_GNN_layers 8 --temps 0.3010 --IsingMode RB_iid_100 --EnergyFunction MIS --mode Diffusion --N_anneal 2000 --beta_factor 1. --n_diffusion_steps 6 --batch_size 30 --n_basis_states 10 --noise_potential bernoulli annealed_obj --multi_gpu --project_name diff_steps_ --n_rand_nodes 0 --seed 123 --graph_mode normal --train_mode PPO
+
+python argparse_ray_main.py --lrs 0.002 --relaxed --GPUs 7 --n_GNN_layers 8 --temps 0.6012 --IsingMode RB_iid_100 --EnergyFunction MIS --mode Diffusion --N_anneal 2000 --beta_factor 1. --n_diffusion_steps 3 --batch_size 30 --n_basis_states 10 --noise_potential bernoulli annealed_obj --multi_gpu --project_name diff_steps_ --n_rand_nodes 5 --seed 123 --graph_mode U_net --no-linear_message_passing
+
+python argparse_ray_main.py --lrs 0.002 --relaxed --GPUs MIG-6dcab994-f9fb-581b-bcd1-b97da093d3be MIG-1ab10e43-66c7-51fb-ab71-3c40dc273863 --n_GNN_layers 8 --temps 0.599 --IsingMode RB_iid_100 --EnergyFunction MIS --mode Diffusion --N_anneal 2000 --beta_factor 1. --n_diffusion_steps 3 --batch_size 30 --n_basis_states 10 --noise_potential bernoulli annealed_obj --multi_gpu --project_name diff_steps_ --n_rand_nodes 5 --seed 123 --graph_mode normal
+
+python argparse_ray_main.py --lrs 0.002 --relaxed --GPUs MIG-1ab10e43-66c7-51fb-ab71-3c40dc273863 --n_GNN_layers 8 --temps 0.599 --IsingMode RB_iid_100 --EnergyFunction MIS --mode Diffusion --N_anneal 2000 --beta_factor 1. --n_diffusion_steps 3 --batch_size 20 --n_basis_states 10 --noise_potential bernoulli annealed_obj --multi_gpu --project_name diff_steps_ --n_rand_nodes 5 --seed 123 --graph_mode normal
+
+python argparse_ray_main.py --lrs 0.002 --relaxed --GPUs 0 --n_GNN_layers 8 --temps 0.6 --IsingMode RB_iid_100 --EnergyFunction MIS --mode Diffusion --N_anneal 2000 --beta_factor 1. --n_diffusion_steps 1 2 3 --batch_size 20 --n_basis_states 10 --noise_potential bernoulli annealed_obj --multi_gpu --project_name diff_steps_ --n_rand_nodes 5 --seed 125 
+
+python argparse_ray_main.py --lrs 0.002 --relaxed --GPUs 3 4 --n_GNN_layers 8 --temps 0.6 --IsingMode RB_iid_100 --EnergyFunction MIS --mode Diffusion --N_anneal 2000 --beta_factor 1. --n_diffusion_steps 4 5 --batch_size 20 --n_basis_states 10 --noise_potential bernoulli annealed_obj --multi_gpu --project_name diff_steps_ --n_rand_nodes 5 --seed 124 125 
+
+python argparse_ray_main.py --lrs 0.002 --relaxed --GPUs 0 --n_GNN_layers 8 --temps 0. --IsingMode RB_iid_100 --EnergyFunction MIS --mode Diffusion --N_anneal 2000 --beta_factor 1. --n_diffusion_steps 1 2 --batch_size 20 --n_basis_states 10 --noise_potential annealed_obj --multi_gpu --project_name anneal_abl --n_rand_nodes 5 --seed 123 124 125 --stop_epochs 400
+
+python argparse_ray_main.py --lrs 0.002 --relaxed --GPUs 0 1 --n_GNN_layers 8 --temps 0. --IsingMode RB_iid_100 --EnergyFunction MIS --mode Diffusion --N_anneal 2000 --beta_factor 1. --n_diffusion_steps 4 5 --batch_size 20 --n_basis_states 10 --noise_potential bernoulli --multi_gpu --project_name anneal_abl --n_rand_nodes 5 --seed 123 124 125 --stop_epochs 400
+
+python argparse_ray_main.py --lrs 0.002 --relaxed --GPUs 5 --n_GNN_layers 8 --temps 0. --IsingMode RB_iid_100 --EnergyFunction MIS --mode Diffusion --N_anneal 2000 --beta_factor 1. --n_diffusion_steps 4 --batch_size 20 --n_basis_states 10 --noise_potential bernoulli --multi_gpu --project_name anneal_abl --n_rand_nodes 5 --seed 125 --stop_epochs 400
+
+python argparse_ray_main.py --lrs 0.002 --relaxed --GPUs 2 --n_GNN_layers 8 --temps 0. --IsingMode RB_iid_100 --EnergyFunction MIS --mode Diffusion --N_anneal 2000 --beta_factor 1. --n_diffusion_steps 3 --batch_size 20 --n_basis_states 10 --noise_potential bernoulli annealed_obj --multi_gpu --project_name anneal_abl --n_rand_nodes 5 --seed 124 125 --stop_epochs 400
+
+python argparse_ray_main.py --lrs 0.002 --relaxed --GPUs 3 --n_GNN_layers 8 --temps 0.6 --IsingMode RB_iid_100 --EnergyFunction MIS --mode Diffusion --N_anneal 2000 --beta_factor 1. --n_diffusion_steps 3 --batch_size 20 --n_basis_states 10 --noise_potential bernoulli --multi_gpu --project_name diff_steps_ --n_rand_nodes 5 --seed 124
+
+python argparse_ray_main.py --lrs 0.002 --relaxed --GPUs 1 --n_GNN_layers 8 --temps 0.6 --IsingMode RB_iid_100 --EnergyFunction MIS --mode Diffusion --N_anneal 2000 --beta_factor 1. --n_diffusion_steps 3 --batch_size 20 --n_basis_states 10 --noise_potential annealed_obj --multi_gpu --project_name diff_steps_ --n_rand_nodes 5 --seed 124 
+
+python argparse_ray_main.py --lrs 0.002 --relaxed --GPUs 0 1 --n_GNN_layers 8 --temps 0.6 --IsingMode RB_iid_100 --EnergyFunction MIS --mode Diffusion --N_anneal 2000 --beta_factor 1. --n_diffusion_steps 4 5 --batch_size 20 --n_basis_states 10 --noise_potential bernoulli --multi_gpu --project_name diff_steps_ --n_rand_nodes 5 --seed 125 
+
+python argparse_ray_main.py --lrs 0.002 --relaxed --GPUs 0 1 --n_GNN_layers 8 --temps 0.6 --IsingMode RB_iid_100 --EnergyFunction MIS --mode Diffusion --N_anneal 2000 --beta_factor 1. --n_diffusion_steps 4 5 --batch_size 20 --n_basis_states 10 --noise_potential bernoulli --multi_gpu --project_name diff_steps_ --n_rand_nodes 5 --seed 125 
+
+python argparse_ray_main.py --lrs 0.002 --relaxed --GPUs 0 1 --n_GNN_layers 8 --temps 0.6 --IsingMode RB_iid_100 --EnergyFunction MIS --mode Diffusion --N_anneal 2000 --beta_factor 1. --n_diffusion_steps 5 --batch_size 20 --n_basis_states 10 --noise_potential bernoulli --multi_gpu --project_name diff_steps_ --n_rand_nodes 5 --seed 124 
+
+###started 16.01
+python argparse_ray_main.py --lrs 0.002 --relaxed --GPUs 0 --n_GNN_layers 8 --temps 0. --IsingMode RB_iid_100 --EnergyFunction MIS --mode Diffusion --N_anneal 2000 --beta_factor 1. --n_diffusion_steps 3 --batch_size 20 --n_basis_states 10 --noise_potential bernoulli --multi_gpu --project_name anneal_abl --n_rand_nodes 5 --seed 124 --stop_epochs 400
+
+python argparse_ray_main.py --lrs 0.002 --relaxed --GPUs 1 2 --n_GNN_layers 8 --temps 0. --IsingMode RB_iid_100 --EnergyFunction MIS --mode Diffusion --N_anneal 2000 --beta_factor 1. --n_diffusion_steps 4 5 --batch_size 20 --n_basis_states 10 --noise_potential bernoulli --multi_gpu --project_name anneal_abl --n_rand_nodes 5 --seed 125 --stop_epochs 400
+
+python argparse_ray_main.py --lrs 0.002 --relaxed --GPUs 6 --n_GNN_layers 8 --temps 0. --IsingMode RB_iid_100 --EnergyFunction MIS --mode Diffusion --N_anneal 2000 --beta_factor 1. --n_diffusion_steps 5 --batch_size 20 --n_basis_states 10 --noise_potential annealed_obj --multi_gpu --project_name anneal_abl --n_rand_nodes 5 --seed 124 125 --stop_epochs 400
+
+
+python argparse_ray_main.py --lrs 0.002 --relaxed --GPUs 6 --n_GNN_layers 8 --temps 0. --IsingMode RB_iid_100 --EnergyFunction MIS --mode Diffusion --N_anneal 2000 --beta_factor 1. --n_diffusion_steps 4 --batch_size 20 --n_basis_states 10 --noise_potential annealed_obj --multi_gpu --project_name anneal_abl --n_rand_nodes 5 --seed 125 --stop_epochs 400
+
+
+####
+python argparse_ray_main.py --lrs 0.002 --relaxed --GPUs 0 --n_GNN_layers 8 --temps 0.3 --IsingMode RB_iid_100 --EnergyFunction MIS --mode Diffusion --N_anneal 2000 --beta_factor 1. --n_diffusion_steps 1 --batch_size 20 --n_basis_states 10 --noise_potential annealed_obj --multi_gpu --project_name diff_steps_ --n_rand_nodes 5
+
+python argparse_ray_main.py --lrs 0.002 --relaxed --GPUs 1 --n_GNN_layers 8 --temps 0.3 --IsingMode RB_iid_100 --EnergyFunction MIS --mode Diffusion --N_anneal 2000 --beta_factor 1. --n_diffusion_steps 2 --batch_size 20 --n_basis_states 10 --noise_potential annealed_obj --multi_gpu --project_name diff_steps_ --n_rand_nodes 5
+
+python argparse_ray_main.py --lrs 0.002 --relaxed --GPUs 2 --n_GNN_layers 8 --temps 0.3 --IsingMode RB_iid_100 --EnergyFunction MIS --mode Diffusion --N_anneal 2000 --beta_factor 1. --n_diffusion_steps 3 --batch_size 20 --n_basis_states 10 --noise_potential annealed_obj --multi_gpu --project_name diff_steps_ --n_rand_nodes 5
+
+python argparse_ray_main.py --lrs 0.002 --relaxed --GPUs 0 1 --n_GNN_layers 8 --temps 0.3 --IsingMode RB_iid_100 --EnergyFunction MIS --mode Diffusion --N_anneal 2000 --beta_factor 1. --n_diffusion_steps 4 --batch_size 20 --n_basis_states 10 --noise_potential annealed_obj --multi_gpu --project_name diff_steps_ --n_rand_nodes 5
+
+python argparse_ray_main.py --lrs 0.002 --relaxed --GPUs 0 1 --n_GNN_layers 8 --temps 0.3 --IsingMode RB_iid_100 --EnergyFunction MIS --mode Diffusion --N_anneal 2000 --beta_factor 1. --n_diffusion_steps 5 --batch_size 20 --n_basis_states 10 --noise_potential annealed_obj --multi_gpu --project_name diff_steps_ --n_rand_nodes 5
+
+## as for loop 
+python argparse_ray_main.py --lrs 0.002 --relaxed --GPUs 0 --n_GNN_layers 8 --temps 0.3 --IsingMode RB_iid_100 --EnergyFunction MIS --mode Diffusion --N_anneal 2000 --beta_factor 1. --n_diffusion_steps 1 2 3 4 --batch_size 20 --n_basis_states 10 --noise_potential annealed_obj --multi_gpu --project_name diff_steps_ --n_rand_nodes 5 --seed 124
+
+python argparse_ray_main.py --lrs 0.002 --relaxed --GPUs 0 --n_GNN_layers 8 --temps 0.6 --IsingMode RB_iid_100 --EnergyFunction MIS --mode Diffusion --N_anneal 2000 --beta_factor 1. --n_diffusion_steps 1 2 --batch_size 20 --n_basis_states 10 --noise_potential bernoulli --multi_gpu --project_name diff_steps_ --n_rand_nodes 5 --seed 123
+
+python argparse_ray_main.py --lrs 0.002 --relaxed --GPUs 1 --n_GNN_layers 8 --temps 0.6 --IsingMode RB_iid_100 --EnergyFunction MIS --mode Diffusion --N_anneal 2000 --beta_factor 1. --n_diffusion_steps 3 4 --batch_size 20 --n_basis_states 10 --noise_potential bernoulli --multi_gpu --project_name diff_steps_ --n_rand_nodes 5 --seed 123
+
+### ablation annealing with different noise potentials
+
+python argparse_ray_main.py --lrs 0.002 --relaxed --GPUs 2 --n_GNN_layers 8 --temps 0. 0.3 --IsingMode RB_iid_100 --EnergyFunction MIS --mode Diffusion --N_anneal 2000 --beta_factor 1. --n_diffusion_steps 3 --batch_size 20 --n_basis_states 10 --noise_potential annealed_obj bernoulli --multi_gpu --project_name abl_anneal --n_rand_nodes 5

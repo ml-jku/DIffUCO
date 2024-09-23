@@ -1,0 +1,23 @@
+#!/bin/bash
+
+#SBATCH --account=DD-23-97
+#SBATCH --partition=qgpu
+#SBATCH --time=2-00:00:00
+#SBATCH --gpus=2
+#SBATCH --cpus-per-task=16
+#SBATCH -J continue
+#SBATCH --output=output.log
+#SBATCH --error=error.log
+#SBATCH --mail-type=BEGIN,ABORT,END
+#SBATCH --mail-user=sebastian.sanokowski@jku.at
+
+
+# activate conda environment
+# e.g. source /project/home/<ACCOUNT>/install/miniconda3/bin/activate mae
+source activate rayjax
+cd ~/code/meanfield_annealing/
+conda activate rayjax
+nvidia-smi
+
+# run script
+python continue_training.py --GPUs 0 1 --wandb_id ugt51hjk

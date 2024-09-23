@@ -1,0 +1,3 @@
+python argparse_ray_main.py --lrs 0.003 --relaxed --GPUs 5 --n_GNN_layers 8 --temps 0.3 --IsingMode BA_small --EnergyFunction MDS --mode Diffusion --N_anneal 2000 --beta_factor 1. --n_diffusion_steps 5 --batch_size 20 --n_basis_states 10 --stop_epochs 500 --multi_gpu --seed 124
+
+python argparse_ray_main.py --lrs 0.003 --relaxed --GPUs 0 1 --n_GNN_layers 8 --temps 0.3 --IsingMode BA_small --EnergyFunction MDS --mode Diffusion --N_anneal 2000 --beta_factor 1. --n_diffusion_steps 5 --batch_size 20 --n_basis_states 10 --stop_epochs 500 --multi_gpu --seed 125

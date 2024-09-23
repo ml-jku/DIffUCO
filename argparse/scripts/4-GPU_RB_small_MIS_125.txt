@@ -1,0 +1,22 @@
+#!/bin/bash
+
+#SBATCH --account=DD-23-97
+#SBATCH --partition=qgpu
+#SBATCH --time=2-00:00:00
+#SBATCH --gpus=2
+#SBATCH --cpus-per-task=16
+#SBATCH -J test
+#SBATCH -o MIS_logfile_small.out
+#SBATCH -e MIS_logfile_small.err
+#SBATCH --mail-type=BEGIN,ABORT,END
+#SBATCH --mail-user=sebastian.sanokowski@jku.at
+
+
+source activate rayjax
+cd ~/code/meanfield_annealing/
+conda activate rayjax
+nvidia-smi
+
+# run script
+python argparse_ray_main.py --lrs 0.002 --relaxed --GPUs 0 1 --n_GNN_layers 8 --temps 0.4 --IsingMode RB_iid_small --EnergyFunction MIS --mode Diffusion --N_anneal 6000 --beta_factor 1. --n_diffusion_steps 6 --batch_size 30 --n_basis_states 10 --stop_epochs 1500 --multi_gpu --noise_potential annealed_obj --seed 125 --n_rand_nodes 4 --mem_frac .94
+

@@ -1,0 +1,29 @@
+Best run RB MaxCl
+
+python argparse_ray_main.py --lrs 0.001 --relaxed --GPUs 2 --n_GNN_layers 8 --temps 1.2 --IsingMode RB_iid_small --EnergyFunction MaxCl --mode Diffusion --N_anneal 2000 --beta_factor 1. --n_diffusion_steps 3 --batch_size 27 --n_basis_states 10 --stop_epochs 500
+
+python argparse_ray_main.py --lrs 0.0001 --relaxed --GPUs 4 --n_GNN_layers 8 --temps 0.7 --IsingMode RB_iid_small --EnergyFunction MaxCl --mode Diffusion --N_anneal 2000 --beta_factor 1. --n_diffusion_steps 3 --batch_size 27 --n_basis_states 10 --stop_epochs 500
+
+python argparse_ray_main.py --lrs 0.0005 --relaxed --GPUs 5 --n_GNN_layers 8 --temps 0.7 --IsingMode RB_iid_small --EnergyFunction MaxCl --mode Diffusion --N_anneal 2000 --beta_factor 1. --n_diffusion_steps 3 --batch_size 27 --n_basis_states 10 --stop_epochs 500
+
+python argparse_ray_main.py --lrs 0.001 --relaxed --GPUs 4 --n_GNN_layers 8 --temps 1.5 --IsingMode RB_iid_small --EnergyFunction MaxCl --mode Diffusion --N_anneal 4000 --beta_factor 1. --n_diffusion_steps 3 --batch_size 30 --n_basis_states 12 --stop_epochs 500
+
+python argparse_ray_main.py --lrs 0.001 --relaxed --GPUs 5 --n_GNN_layers 8 --temps 0.7 --IsingMode RB_iid_small --EnergyFunction MaxCl --mode Diffusion --N_anneal 4000 --beta_factor 1. --n_diffusion_steps 3 --batch_size 30 --n_basis_states 12 --stop_epochs 500
+
+
+############## MaxCL
+
+python argparse_ray_main.py --lrs 0.001 --relaxed --GPUs 5 --n_GNN_layers 8 --temps 0.2 --IsingMode RB_iid_small --EnergyFunction MaxClv2 --mode Diffusion --N_anneal 2000 --beta_factor 1. --n_diffusion_steps 3 --batch_size 20 --n_basis_states 7 --stop_epochs 500
+
+python argparse_ray_main.py --lrs 0.001 --relaxed --GPUs 6 --n_GNN_layers 8 --temps 0.2 --IsingMode RB_iid_small --EnergyFunction MaxClv2 --mode Diffusion --N_anneal 2000 --beta_factor 1. --n_diffusion_steps 3 --batch_size 20 --n_basis_states 7 --stop_epochs 500 --multi_gpu
+
+### more nh
+python argparse_ray_main.py --lrs 0.001 --relaxed --GPUs 4 --n_GNN_layers 6 --n_hidden_neurons 100 --temps 1.2 --IsingMode RB_iid_small --EnergyFunction MaxCl --mode Diffusion --N_anneal 2000 --beta_factor 1. --n_diffusion_steps 3 --batch_size 27 --n_basis_states 8 --stop_epochs 1000
+
+python argparse_ray_main.py --lrs 0.001 --relaxed --GPUs 0 1 --n_GNN_layers 8 --temps 1. --IsingMode RB_iid_small --EnergyFunction MaxCl --mode Diffusion --N_anneal 2000 --beta_factor 1. --n_diffusion_steps 3 --batch_size 20 --n_basis_states 8 --stop_epochs 1000 --multi_gpu --time_conditioning
+
+#### MaxCl bernoulli
+
+python argparse_ray_main.py --lrs 0.002 --relaxed --GPUs 6 7 --n_GNN_layers 8 --temps 0.5 --IsingMode RB_iid_small --EnergyFunction MaxCl --mode Diffusion --N_anneal 3000 --beta_factor 1. --n_diffusion_steps 5 --batch_size 20 --n_basis_states 8 --stop_epochs 1000 --multi_gpu --time_conditioning --noise_potential bernoulli --seed 124 125
+
+python argparse_ray_main.py --lrs 0.002 --relaxed --GPUs 0 1 2 --n_GNN_layers 8 --temps 0.5 --IsingMode RB_iid_small --EnergyFunction MaxCl --mode Diffusion --N_anneal 3000 --beta_factor 1. --n_diffusion_steps 3 --batch_size 20 --n_basis_states 8 --stop_epochs 1000 --multi_gpu --time_conditioning --noise_potential bernoulli --seed 123

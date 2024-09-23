@@ -1,0 +1,1 @@
+python argparse_ray_main.py --lrs 0.0002 --relaxed --GPUs 3 --n_GNN_layers 8 --temps 0.3 --IsingMode BA_large --EnergyFunction MDS --mode Diffusion --N_anneal 2000 --beta_factor 1. --n_diffusion_steps 8 --batch_size 20 --n_basis_states 10 --multi_gpu --seed 123 --minib_diff_steps 4 --noise_potential annealed_obj --graph_mode normal --train_mode PPO

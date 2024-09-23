@@ -1,0 +1,21 @@
+#!/bin/bash
+
+#SBATCH --account=DD-23-97
+#SBATCH --partition=qgpu
+#SBATCH --time=2-00:00:00
+#SBATCH --gpus=1
+#SBATCH --cpus-per-task=16
+#SBATCH -J test
+#SBATCH -o TSP_logfile.out
+#SBATCH -e TSP_logfile.err
+#SBATCH --mail-type=BEGIN,ABORT,END
+#SBATCH --mail-user=sebastian.sanokowski@jku.at
+
+
+source activate rayjax
+cd ~/code/meanfield_annealing/
+conda activate rayjax
+
+
+# run script
+python argparse_ray_main.py --lrs 0.001 --relaxed --GPUs 0 --n_GNN_layers 8 --temps 0.05 --IsingMode 2D_random_20 --EnergyFunction TSP --mode Diffusion --N_anneal 400 --beta_factor 1. --n_diffusion_steps 4 --batch_size 40 --n_basis_states 15 --stop_epochs 1200 --multi_gpu --noise_potential bernoulli --no-linear_message_passing

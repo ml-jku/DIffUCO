@@ -1,0 +1,6 @@
+BA_small_graphs
+python argparse_ray_main.py --lrs 0.002 --relaxed --GPUs 6 --n_GNN_layers 8 --temps 0.2 --IsingMode BA_large --EnergyFunction MaxCut --mode Diffusion --N_anneal 2000 --N_equil 1000 --beta_factor 1. --n_diffusion_steps 3 --batch_size 20 --n_basis_states 10 --stop_epochs 500 --multi_gpu
+
+
+
+python argparse_ray_main.py --lrs 0.002 --relaxed --GPUs 5 --n_GNN_layers 4 --temps 0.2 --IsingMode BA_large --EnergyFunction MaxCut --mode Diffusion --N_anneal 1000 --N_equil 0 --beta_factor 1. --n_diffusion_steps 6 --batch_size 20 --n_basis_states 10 --stop_epochs 500 --multi_gpu --seed 124

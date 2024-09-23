@@ -1,0 +1,23 @@
+#!/bin/bash
+#SBATCH --partition=gpu
+#SBATCH --account=p200295
+#SBATCH --qos=default
+#SBATCH --time=48:00
+#SBATCH --nodes=1
+#SBATCH --gpus-per-node 2
+#SBATCH --tasks-per-node=1
+#SBATCH -J RB_iid_200_MVC
+#SBATCH -o RB_iid_200_MVC_PPO_20_logfile.out
+#SBATCH -e RB_iid_200_MVC_PPO_20_logfile.err
+#SBATCH --mail-type=BEGIN,ABORT,END
+#SBATCH --mail-user=sebastian.sanokowski@jku.at
+
+cd /home/users/u101332/code/DiffUCO
+pwd
+source activate rayjay_clone
+conda activate rayjay_clone
+
+nvidia-smi
+
+# run script
+python argparse_ray_main.py --lrs 0.00025 --relaxed --GPUs 0 1  --n_GNN_layers 8 --temps 0.1 --IsingMode RB_iid_200 --EnergyFunction MVC --mode Diffusion --N_anneal 2500 --beta_factor 1. --n_diffusion_steps 20 --batch_size 70 --n_basis_states 7 --noise_potential bernoulli --multi_gpu --project_name diff_steps_ --n_rand_nodes 3 --seed 123 --graph_mode normal --train_mode PPO --inner_loop_steps 1 --diff_schedule exp --minib_diff_steps 4  --stop_epochs 1500 --mem_frac 0.92

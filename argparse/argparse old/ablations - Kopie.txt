@@ -1,0 +1,6 @@
+### 
+python argparse_ray_main.py --lrs 0.002 --relaxed --GPUs 1 --n_GNN_layers 8 --temps 0.3 --IsingMode RB_iid_100 --EnergyFunction MIS --mode Diffusion --N_anneal 2000 --beta_factor 1. --n_diffusion_steps 3 --batch_size 20 --n_basis_states 10 --noise_potential annealed_obj --multi_gpu --project_name diff_steps_
+
+python argparse_ray_main.py --lrs 0.002 --relaxed --GPUs 2 --n_GNN_layers 8 --temps 0.3 --IsingMode RB_iid_100 --EnergyFunction MIS --mode Diffusion --N_anneal 2000 --beta_factor 1. --n_diffusion_steps 1 --batch_size 20 --n_basis_states 10 --noise_potential annealed_obj --multi_gpu --project_name diff_steps_
+
+python argparse_ray_main.py --lrs 0.002 --relaxed --GPUs 0 --n_GNN_layers 8 --temps 0.3 --IsingMode RB_iid_100 --EnergyFunction MIS --mode Diffusion --N_anneal 2000 --beta_factor 1. --n_diffusion_steps 2 --batch_size 20 --n_basis_states 10 --noise_potential annealed_obj --multi_gpu --project_name diff_steps_

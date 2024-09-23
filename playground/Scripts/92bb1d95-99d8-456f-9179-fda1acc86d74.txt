@@ -1,0 +1,22 @@
+#!/bin/bash
+
+#SBATCH --account DD-23-97
+#SBATCH --partition qgpu
+#SBATCH --time 2-00:00:00
+#SBATCH --nodes=1
+#SBATCH --gpus-per-node 1
+#SBATCH --tasks-per-node=1
+#SBATCH -J l8zc1bl1
+#SBATCH -o l8zc1bl1_logfile.out
+#SBATCH -e l8zc1bl1_logfile.err
+#SBATCH --mail-type=BEGIN,ABORT,END
+#SBATCH --mail-user=sebastian.sanokowski@jku.at
+
+source activate rayjay_clone
+cd ~/code/DiffUCO/
+conda activate rayjay_clone
+
+nvidia-smi
+
+# run script
+python continue_training.py --wandb_id l8zc1bl1 --GPUs 0 

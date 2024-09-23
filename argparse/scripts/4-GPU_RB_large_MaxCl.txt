@@ -1,0 +1,21 @@
+#!/bin/bash
+
+#SBATCH --account=DD-23-97
+#SBATCH --partition=qgpu
+#SBATCH --time=2-00:00:00
+#SBATCH --gpus=4
+#SBATCH --cpus-per-task=16
+#SBATCH -J test
+#SBATCH -o maxcl_logfile.out
+#SBATCH -e maxcl_logfile.err
+#SBATCH --mail-type=BEGIN,ABORT,END
+#SBATCH --mail-user=sebastian.sanokowski@jku.at
+
+
+source activate rayjax
+cd ~/code/meanfield_annealing/
+conda activate rayjax
+nvidia-smi
+
+# run script
+python argparse_ray_main.py --lrs 0.002 --relaxed --GPUs 0 1 2 3 --n_GNN_layers 6 --temps 0.5 --IsingMode RB_iid_large --EnergyFunction MaxCl --mode Diffusion --N_anneal 2000 --beta_factor 1. --n_diffusion_steps 3 --batch_size 22 --n_basis_states 8 --stop_epochs 1500 --multi_gpu --noise_potential annealed_obj --seed 123 --n_rand_nodes 0 --mem_frac .90

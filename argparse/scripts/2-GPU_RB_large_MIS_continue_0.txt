@@ -1,0 +1,24 @@
+#!/bin/bash
+
+#SBATCH --account DD-23-97
+#SBATCH --partition qgpu
+#SBATCH --time 2-00:00:00
+#SBATCH --nodes=1
+#SBATCH --gpus-per-node 5
+#SBATCH --tasks-per-node=1
+#SBATCH -J MIS_large_continue_0
+#SBATCH -o MIS_large_logfile.out
+#SBATCH -e MIS_large_logfile.err
+#SBATCH --mail-type=BEGIN,ABORT,END
+#SBATCH --mail-user=sebastian.sanokowski@jku.at
+
+
+source activate rayjay_clone
+cd ~/code/DiffUCO/
+conda activate rayjay_clone
+
+nvidia-smi
+
+# run script
+python continue_training.py --wandb_id 5rpyixg8 --GPUs 0 1 2 3 4
+

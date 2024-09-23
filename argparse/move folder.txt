@@ -1,0 +1,1 @@
+mv /system/user/publicwork/sanokows/DiffUCO/DatasetCreator/loadGraphDatasets/DatasetSolutions/no_norm/BA_huge /system/user/publicwork/sanokows/VAG-CO/DatasetCreator/loadGraphDatasets/DatasetSolutions/no_norm/
