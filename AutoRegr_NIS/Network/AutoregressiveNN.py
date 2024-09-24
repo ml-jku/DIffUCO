@@ -137,14 +137,16 @@ class AutoregressiveNN(nn.Module):
             pickle.dump(config, f)
 
     @staticmethod
-    def save_dict(unbiased_dict, wandb_id, seed, path_to_models = "/models"):
-        cur_path = os.getcwd()
-        path_folder = f"{cur_path}{path_to_models}/"
+    def save_dict(unbiased_dict, wandb_id, seed, path_to_models = "/models", dict_name = "unbiased_dict"):
+        current_file_path = os.path.abspath(__file__)
+        # Get the parent directory of the current file
+        parent_folder = os.path.dirname(os.path.dirname(current_file_path))
+        path_folder = f"{parent_folder}{path_to_models}/"
 
         if not os.path.exists(path_folder):
             os.makedirs(path_folder)
 
-        filename = f"{wandb_id}_unbiased_dict_{seed}.pickle"
+        filename = f"{wandb_id}_{dict_name}_{seed}.pickle"
 
         with open(os.path.join(path_folder, filename), 'wb') as f:
             print("save dict to", os.path.join(path_folder, filename))
@@ -152,9 +154,15 @@ class AutoregressiveNN(nn.Module):
 
     @staticmethod
     def load_dict( wandb_id, seed, path_to_models = "/models"):
+        
+        current_file_path = os.path.abspath(__file__)
 
-        cur_path = os.getcwd()
-        path_folder = f"{cur_path}{path_to_models}/"
+        # Get the parent directory of the current file
+        parent_folder = os.path.dirname(os.path.dirname(current_file_path))
+
+        # print(f"Current File Path: {current_file_path}")
+        # print(f"Parent Folder: {parent_folder}")
+        path_folder = f"{parent_folder}{path_to_models}/"
 
         filename = f"{wandb_id}_unbiased_dict_{seed}.pickle"
 

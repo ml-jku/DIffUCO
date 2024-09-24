@@ -13,7 +13,8 @@ def stop_criterion(acf_values, MCMC_chain, C = 5):
         if M[i] > int_tau[i]:
             idx = i
 
-    print("average Energy is", MCMC_chain[idx])
+    print("average MCMC Energy is", MCMC_chain[idx])
+    return MCMC_chain[idx]
 
 
 
@@ -69,13 +70,12 @@ def plot_acf(acf_values, chain, threshold=0.05):
     # Show the plots
     plt.tight_layout()
     plt.show()
-
-    stop_criterion(acf_values, MCMC_chain)
     # Check convergence
     if np.all(np.abs(acf_values[1:])/(len(acf_values)-1) < threshold):
         print("The chain seems to have converged based on the autocorrelation function.")
     else:
         print("The chain may not have fully converged yet.")
+    return stop_criterion(acf_values, chain)
 
 def plot_X_sequences(X_seq,n_trials = 5,n = 5, title = ""):
 
@@ -234,8 +234,10 @@ if __name__ == "__main__":
     import pickle
     import os
 
-    path = os.getcwd()
-    path_to_models = os.path.dirname(os.path.dirname(path)) + "/Checkpoints"
+    current_file_path = os.path.abspath(__file__)
+    # Get the parent directory of the current file
+    parent_folder = os.path.dirname(os.path.dirname(os.path.dirname(current_file_path)))
+    path_to_models = parent_folder + "/Checkpoints"
 
     def load_MCMC_chain( run_id, stuff_name="unbiased_sampling_log_dict"):
         path_folder = f"{path_to_models}/{run_id}/"
@@ -247,6 +249,15 @@ if __name__ == "__main__":
 
         with open(os.path.join(path_folder, file_name), 'rb') as f:
             log_dict = pickle.load(f)
+        MCMC_log_dict = log_dict[0.0]
+        MCMC_energies = []
+        for seed in MCMC_log_dict.keys():
+            MCMC_chain = MCMC_log_dict[seed]["internal_energies_MCMC"]["y_axis"]
+            acf_values = compute_acf(MCMC_chain, nlags=len(MCMC_chain))
+            MCMC_energy = plot_acf(acf_values, MCMC_chain, threshold=0.05)
+            MCMC_energies.append(MCMC_energy)
+
+        print("final MCMC energy", np.mean(MCMC_energies), np.std(MCMC_energies)/np.sqrt(len(MCMC_energies)))
         return log_dict
 
     run_id = "qkfzunur"
@@ -254,17 +265,3 @@ if __name__ == "__main__":
 
     run_id = "ewmsen06"
     plot_result_dict(run_id)
-
-    raise ValueError("")
-
-    log_dict = load_MCMC_chain(run_id)
-    MCMC_chain = log_dict["figures"]["internal_energies_MCMC"]["y_axis"]
-
-    unbiased_X_seq = log_dict["samples"]["unbiased_X_sequences"][0]
-    biased_X_seq = log_dict["samples"]["biased_X_sequences"][0]
-    plot_X_sequences(biased_X_seq, title="biased")
-    #plot_X_sequences(unbiased_X_seq, title = "unbiased")
-
-    # Compute and plot autocorrelation
-    acf_values = compute_acf(MCMC_chain, nlags=len(MCMC_chain))
-    plot_acf(acf_values, MCMC_chain, threshold=0.05)

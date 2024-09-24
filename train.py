@@ -299,7 +299,8 @@ class TrainMeanField:
 	def _load_best_epoch(self):
 		wandb_run_id = self.load_wandb_id
 		path_folder = f"{self.path_to_models}/{wandb_run_id}/"
-		file_name = f"{wandb_run_id}_best_epoch_new.pickle"
+		#file_name = f"{wandb_run_id}_best_epoch_new.pickle"
+		file_name = f"best_{wandb_run_id}.pickle"
 		with open(path_folder + file_name, "rb") as f:
 			loaded_dict = pickle.load(f)
 
@@ -365,12 +366,14 @@ class TrainMeanField:
 		else:
 			if(self.load_best_parameters):
 				print("Best Parameters are Loaded!")
-				try:
-					loaded_dict = self._load_best_epoch()
-				except:
+				loaded_dict = self._load_best_epoch()
+				if(isinstance(loaded_dict, dict)):
+					pass
+				else:
 					params, config = self._load_best_epoch_old()
 					epochs = self._load_last_epoch()["epoch"]
 					loaded_dict = {"params": params, "config": config, "epoch": epochs}
+
 			else:
 				if(self.config["train_mode"] == "PPO" and self.config["problem_name"] != "IsingModel"):
 					try:
@@ -381,6 +384,7 @@ class TrainMeanField:
 				else:
 					loaded_dict = self._load_last_epoch()
 
+			print("loaded dict", self.load_best_parameters, loaded_dict.keys())
 			self.curr_epoch = loaded_dict["epoch"]
 			self.params = loaded_dict["params"]
 

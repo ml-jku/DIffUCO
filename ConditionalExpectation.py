@@ -81,8 +81,15 @@ class ConditionalExpectation:
     def __load_params(self):
         if(self.load_best_network):
             file_name = f"best_{self.wandb_id}.pickle"
-            with open(f'{self.path_to_models}/{self.wandb_id}/{file_name}', 'rb') as f:
-                params, config, eval_dict = pickle.load(f)
+            try:
+                with open(f'{self.path_to_models}/{self.wandb_id}/{file_name}', 'rb') as f:
+                    params, config, eval_dict = pickle.load(f)
+            except:
+                with open(f'{self.path_to_models}/{self.wandb_id}/{file_name}', 'rb') as f:
+                    loaded_dict = pickle.load(f)
+                    params = loaded_dict["params"]
+                    config = loaded_dict["config"]
+                    eval_dict = loaded_dict["logs"]
             for key in eval_dict.keys():
                 print(key, eval_dict[key])
 
@@ -368,7 +375,7 @@ import argparse
 
 parser = argparse.ArgumentParser()
 
-parser.add_argument('--wandb_id', default=["otpu58r3"], type = str, nargs = "+")
+parser.add_argument('--wandb_id', default=["m3h9mz5g"], type = str, nargs = "+")
 parser.add_argument('--dataset', default="RB_iid_small", type = str)
 parser.add_argument('--GPU', default="0", type = str)
 parser.add_argument('--evaluation_factors', default=[3], type = int, nargs = "+")

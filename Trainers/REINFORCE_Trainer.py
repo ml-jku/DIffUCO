@@ -10,10 +10,10 @@ class Reinforce(Base):
         self.n_bernoulli_features = self.config["n_bernoulli_features"]
         self.n_diffusion_steps = self.config["n_diffusion_steps"]
         self.inner_update_steps = 1
-        self.diffusion_loss_eval = lambda a,b,c,d,e: self.diffusion_loss(a, b, c, d, e, "eval")
+        #self.diffusion_loss_eval = lambda a,b,c,d,e: self.diffusion_loss(a, b, c, d, e, "eval")
         self.diffusion_loss_train = lambda a,b,c,d,e: self.diffusion_loss(a, b, c, d, e,  "train")
 
-        # self.diffusion_loss_eval = lambda a,b,c,d,e: self._environment_steps_scan(a, b, c, d, e, "eval")
+        self.diffusion_loss_eval = lambda a,b,c,d,e: self._environment_steps_scan(a, b, c, d, e, "eval")
         # self.diffusion_loss_train = lambda a,b,c,d,e: self._environment_steps_scan(a, b, c, d, e,  "train")
 
         # self.vmapped_make_one_step = jax.vmap(self.model.make_one_step, in_axes=(None, None, 1, None, 0),

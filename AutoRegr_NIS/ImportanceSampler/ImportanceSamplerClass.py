@@ -27,9 +27,6 @@ def free_energy_bounds(beta, log_w_hat, L):
 
     return -jnp.log(Z_hat + std_error) / beta / L ** 2, -jnp.log(Z_hat - std_error) / beta / L ** 2
 
-def entropy(beta, samples, z_hat, H_Graph):
-    return beta * hamiltonian(H_Graph, samples) + jnp.log(z_hat)
-
 def calc_log_w_hat(log_prob_per_state, target_temp, H_Graph, sample):
     log_prob_boltz = -(1 / target_temp) * hamiltonian(H_Graph, sample)
     log_w_hat = log_prob_boltz - log_prob_per_state
@@ -50,6 +47,7 @@ def calculate_entropy( beta, internal_energy, free_energy):
         Calculate the entropy of the NxN lattice
         """
         return (internal_energy - free_energy) / (1 / beta)
+
 class ImportanceSampler():
 
     def __init__(self):

@@ -6,8 +6,12 @@ from eval_step_factor import plot_over_diff_eval_steps
 from scipy.stats import wilcoxon, ttest_rel
 import time
 def read_and_get_mean_energy(wandb_run_id, eval_steps = 3, n_states = 8, mode = "test"):
-    path = os.getcwd()
-    path_to_models = os.path.dirname(os.path.dirname(path)) + "/Checkpoints"
+
+    current_file_path = os.path.abspath(__file__)
+
+    # Get the parent directory of the current file
+    parent_folder = os.path.dirname(os.path.dirname(os.path.dirname(current_file_path)))
+    path_to_models = parent_folder + "/Checkpoints"
     path_folder = f"{path_to_models}/{wandb_run_id}/"
 
     if not os.path.exists(path_folder):
@@ -37,8 +41,11 @@ def read_and_get_mean_energy(wandb_run_id, eval_steps = 3, n_states = 8, mode = 
     return result_dict
 
 def read_and_get_best_energy(wandb_run_id, eval_steps = 3, n_states = 150, mode = "test"):
-    path = os.getcwd()
-    path_to_models = os.path.dirname(os.path.dirname(path)) + "/Checkpoints"
+    current_file_path = os.path.abspath(__file__)
+
+    # Get the parent directory of the current file
+    parent_folder = os.path.dirname(os.path.dirname(os.path.dirname(current_file_path)))
+    path_to_models = parent_folder + "/Checkpoints"
     path_folder = f"{path_to_models}/{wandb_run_id}/"
 
     if not os.path.exists(path_folder):
@@ -151,7 +158,15 @@ MDS_small_dict = {
     "PPO": MDS_small_PPO,
     "fKL": MDS_small_fKL,
     "rKL": MDS_small_rKL,
+}
 
+MIS_100_vanilla = ["tw6arncf", "aammw3xo"]
+MIS_100_graph_norm = ["fhb7vpxg", "2b86u9hv"]
+MIS_100_lr_schedule = ["0uoh6k9p", "d9o38oog"]
+MIS_100_dict = {
+    "vanilla": MIS_100_vanilla,
+    "w/ lr schedule": MIS_100_lr_schedule,
+    "graph_norm": MIS_100_graph_norm,
 }
 
 def seconds_to_hms(seconds):
@@ -235,13 +250,17 @@ def best_energy_runs(GPU_num = "0", measure_time = False, n_samples = 150, batch
 
     print(print_str)
 
-def measure_time_runs(GPU_num = "0", measure_time = True, n_samples = 30, batch_size = 1):
+def measure_time_runs(GPU_num = "0", measure_time = True, n_samples = 30, batch_size = 1, filter = None):
     ### TODO MIS large is missing here!
-    wandb_dict_list = [MIS_large_dict]
-    datasets = ["RB_iid_large"]
+    wandb_dict_list = [MIS_small_dict, MIS_large_dict, MaxCut_large_dict, MaxCut_small_dict, MDS_large_dict, MDS_small_dict, MaxCL_small_dict]
+    datasets = ["RB_iid_small", "RB_iid_large", "BA_large", "BA_small", "BA_large", "BA_small", "RB_iid_small"]
 
     method_run_list = []
     for method_dict, dataset in zip(wandb_dict_list, datasets):
+
+        if(filter is not None):
+            method_dict = {filter: method_dict[filter]}
+
         str = ""
         for key in method_dict:
             for method_wandb_id in method_dict[key]:
@@ -257,11 +276,12 @@ def measure_time_runs(GPU_num = "0", measure_time = True, n_samples = 30, batch_
     print(print_str)
 
 def mean_energy_runs(GPU_num = "4", measure_time = False, n_samples = 30, batch_size = 30):
-    wandb_dict_list = [  MaxCut_large_dict]
-    datasets = [ "BA_large"]
+    wandb_dict_list = [MIS_100_dict]
+    datasets = ["RB_iid_100"]
 
     method_run_list = []
     for method_dict, dataset in zip(wandb_dict_list, datasets):
+
         str = ""
         for key in method_dict:
             for method_wandb_id in method_dict[key]:
@@ -301,9 +321,12 @@ if(__name__ == "__main__"):
     print("MDS large")
     calc_mean_and_std(MDS_large_dict, lambda a: read_and_get_mean_energy(a, eval_steps = 3, n_states = 30))
     calc_mean_and_std(MDS_large_dict, read_and_get_best_energy)
+    print("MIS 100")
+    calc_mean_and_std(MIS_100_dict, lambda a: read_and_get_mean_energy(a, eval_steps = 3, n_states = 30))
+    # calc_mean_and_std(MIS_100_dict, read_and_get_best_energy)
     #raise ValueError("")
 
     best_energy_runs(GPU_num="4")
-    mean_energy_runs(GPU_num="4",batch_size = 20)
-    measure_time_runs(GPU_num="4")
+    mean_energy_runs(GPU_num="6",batch_size = 30)
+    measure_time_runs(GPU_num="6", filter = "rKL")
 

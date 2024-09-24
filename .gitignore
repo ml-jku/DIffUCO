@@ -5,13 +5,16 @@ __pycache__/
 
 Checkpoints/
 wandb/
+playground/Clusters/
+playground/Scripts/
 DatasetCreator/loadGraphDatasets/DatasetSolutions/
 DatasetCreator/loadGraphDatasets/GsetData/
 DatasetCreator/loadGraphDatasets/tmp/
 DatasetCreator/loadGraphDatasets/__pycache__/
 AutoRegr_NIS/__pycache__/
 AutoRegr_NIS/wandb/
-AutoRegr_NIS/Checkpoints/
+AutoRegr_NIS/models/
+DiffUCO.code-workspace
 
 # C extensions
 *.so
