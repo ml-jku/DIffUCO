@@ -153,7 +153,7 @@ class AutoregressiveNN(nn.Module):
             pickle.dump(unbiased_dict, f)
 
     @staticmethod
-    def load_dict( wandb_id, seed, path_to_models = "/models"):
+    def load_dict( wandb_id, seed, path_to_models = "/models", dict_name = "unbiased_dict"):
         
         current_file_path = os.path.abspath(__file__)
 
@@ -164,7 +164,7 @@ class AutoregressiveNN(nn.Module):
         # print(f"Parent Folder: {parent_folder}")
         path_folder = f"{parent_folder}{path_to_models}/"
 
-        filename = f"{wandb_id}_unbiased_dict_{seed}.pickle"
+        filename = f"{wandb_id}_{dict_name}_{seed}.pickle"
 
         with open(os.path.join(path_folder, filename), 'rb') as f:
             unbaised_dict = pickle.load( f)

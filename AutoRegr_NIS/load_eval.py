@@ -24,18 +24,20 @@ args = parser.parse_args()
 
 
 if(__name__ == "__main__"):
-
     for wandb_id in args.wandb_ids:
 
         seed_list = []
+        seed_list_2 = []
 
         for seed in range(args.seeds):
             print("initialize ANN")
             ann = AutoregressiveNN(grid_size = 1)
 
             res = ann.load_dict(wandb_id, seed)
+            res2 = ann.load_dict(wandb_id, seed, dict_name = "MCMC")
             print(res)
             seed_list.append(res)
+            seed_list_2.append(res2)
 
 
         one_dict = seed_list[0]
@@ -44,3 +46,6 @@ if(__name__ == "__main__"):
 
         for key in keys:
             print(key, np.mean([dict[key] for dict in seed_list]), np.std([dict[key] for dict in seed_list])/np.sqrt(args.seeds))
+
+        MCMC_list = [el["MCMC_energy"][-1] for el in seed_list_2]
+        print("MCMC_energy", np.mean(MCMC_list), np.std(MCMC_list)/np.sqrt(args.seeds))
