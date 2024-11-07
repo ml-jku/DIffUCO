@@ -1,4 +1,0 @@
-BA MaxCl large
-
-
-python argparse_ray_main.py --lrs 0.001 --relaxed --GPUs 1 --n_GNN_layers 5 --temps 0.1 --IsingMode BA_large --EnergyFunction MaxCut --mode Diffusion --N_anneal 500 --beta_factor 1. --n_diffusion_steps 3 --batch_size 30 --n_basis_states 8 --stop_epochs 500

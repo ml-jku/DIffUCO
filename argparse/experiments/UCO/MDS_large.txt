@@ -1,0 +1,10 @@
+rKL w/o RL
+python argparse_ray_main.py --lrs 0.001 --relaxed --GPUs 0 1 --n_GNN_layers 6 --temps 0.1 --IsingMode BA_large --EnergyFunction MDS --mode Diffusion --N_anneal 2000 --beta_factor 1. --n_diffusion_steps 6 --batch_size 30 --n_basis_states 8 --noise_potential bernoulli --multi_gpu --project_name final_runs --n_rand_nodes 3 --seed 123 --graph_mode normal --train_mode REINFORCE --inner_loop_steps 1 --diff_schedule exp --minib_diff_steps 6 --minib_basis_states 8 --stop_epochs 1500 --mem_frac 0.92
+
+rKL w/ RL
+python argparse_ray_main.py --lrs 0.0005 --relaxed --GPUs 0 1 --n_GNN_layers 6 --temps 0.1 --IsingMode BA_large --EnergyFunction MDS --mode Diffusion --N_anneal 2000 --beta_factor 1. --n_diffusion_steps 12 --batch_size 60 --n_basis_states 4 --noise_potential bernoulli --multi_gpu --project_name final_runs --n_rand_nodes 3 --seed 123 --graph_mode normal --train_mode PPO --inner_loop_steps 1 --diff_schedule exp --minib_diff_steps 6 --minib_basis_states 4 --stop_epochs 1500 --mem_frac 0.92
+
+fKL w/ MC
+python argparse_ray_main.py --lrs 0.0005 --relaxed --GPUs 0 1 --n_GNN_layers 6 --temps 0.05 --IsingMode BA_large --EnergyFunction MDS --mode Diffusion --N_anneal 2000 --beta_factor 1.0 --n_diffusion_steps 12 --batch_size 60 --n_basis_states 4 --noise_potential bernoulli --multi_gpu --project_name final_runs --n_rand_nodes 3 --seed 123 --graph_mode normal --train_mode Forward_KL --inner_loop_steps 1 --diff_schedule exp --minib_diff_steps 6 --minib_basis_states 4 --stop_epochs 1500 --mem_frac 0.92
+
+

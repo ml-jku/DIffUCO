@@ -45,7 +45,7 @@ if(__name__ == "__main__"):
         keys = one_dict.keys()
 
         for key in keys:
-            print(key, np.mean([dict[key] for dict in seed_list]), np.std([dict[key] for dict in seed_list])/np.sqrt(args.seeds))
+            print(key, np.mean([dict[key][-1] for dict in seed_list]), np.std([dict[key][-1] for dict in seed_list])/np.sqrt(args.seeds))
 
         MCMC_list = [el["MCMC_energy"][-1] for el in seed_list_2]
         print("MCMC_energy", np.mean(MCMC_list), np.std(MCMC_list)/np.sqrt(args.seeds))

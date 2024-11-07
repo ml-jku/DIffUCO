@@ -1,9 +1,0 @@
-python argparse_ray_main.py --lrs 0.001 --relaxed --GPUs 0 --n_GNN_layers 6 --temps 0.045 --IsingMode RB_iid_large --EnergyFunction MIS --mode Diffusion --N_anneal 1000 --beta_factor 1. --n_diffusion_steps 9 --batch_size 16 --n_basis_states 6 --noise_potential bernoulli --multi_gpu --project_name diff_steps_ --n_rand_nodes 3 --seed 123 --graph_mode normal --train_mode PPO --inner_loop_steps 1 --diff_schedule own --minib_diff_steps 3 --proj_method CE --minib_basis_states 6 --mem_frac .93
-
-RB MIS large
-
-
-debug
-python argparse_ray_main.py --lrs 0.001 --relaxed --GPUs 4 --n_GNN_layers 1 --temps 0.045 --IsingMode RB_iid_large --EnergyFunction MIS --mode Diffusion --N_anneal 1000 --beta_factor 1. --n_diffusion_steps 9 --batch_size 16 --n_basis_states 1 --noise_potential bernoulli --multi_gpu --project_name diff_steps_ --n_rand_nodes 3 --seed 123 --graph_mode normal --train_mode PPO --inner_loop_steps 1 --diff_schedule own --minib_diff_steps 3 --proj_method CE --minib_basis_states 1 --mem_frac .93
-
-python argparse_ray_main.py --lrs 0.002 --relaxed --GPUs 0 1 --n_GNN_layers 7 --temps 0.3 --IsingMode RB_iid_large --EnergyFunction MIS --mode Diffusion --N_anneal 3000 --beta_factor 1. --n_diffusion_steps 4 --batch_size 18 --n_basis_states 5 --stop_epochs 1200 --multi_gpu --seed 124

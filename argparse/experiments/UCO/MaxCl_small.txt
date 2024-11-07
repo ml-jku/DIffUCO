@@ -1,0 +1,10 @@
+rKL w/o RL
+python argparse_ray_main.py --lrs 0.001 --relaxed --GPUs 0 1 --n_GNN_layers 8 --temps 0.2 --IsingMode RB_iid_small --EnergyFunction MaxCl --mode Diffusion --N_anneal 2000 --beta_factor 1. --n_diffusion_steps 6 --batch_size 30 --n_basis_states 10 --noise_potential bernoulli --multi_gpu --project_name final_runs --n_rand_nodes 3 --seed 123 --graph_mode normal --train_mode REINFORCE --inner_loop_steps 1 --diff_schedule exp
+
+rKL w/ RL
+python argparse_ray_main.py --lrs 0.001 --relaxed --GPUs 0 1 --n_GNN_layers 8 --temps 0.2 --IsingMode RB_iid_small --EnergyFunction MaxCl --mode Diffusion --N_anneal 2000 --beta_factor 1. --n_diffusion_steps 12 --batch_size 60 --n_basis_states 5 --noise_potential bernoulli --multi_gpu --project_name final_runs --n_rand_nodes 3 --seed 123 --graph_mode normal --train_mode PPO --inner_loop_steps 1 --diff_schedule exp --minib_diff_steps 6 --minib_basis_states 5
+
+fKL w/ MC
+python argparse_ray_main.py --lrs 0.0005 --relaxed --GPUs 0 1 --n_GNN_layers 8 --temps 0.4 --IsingMode RB_iid_small --EnergyFunction MaxCl --mode Diffusion --N_anneal 2000 --beta_factor 1. --n_diffusion_steps 12 --batch_size 60 --n_basis_states 5 --noise_potential bernoulli --multi_gpu --project_name final_runs --n_rand_nodes 3 --seed 123 --graph_mode normal --train_mode Forward_KL --inner_loop_steps 1 --diff_schedule exp --minib_diff_steps 6 --minib_basis_states 5
+
+
