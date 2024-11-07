@@ -1,6 +1,12 @@
-# Official Repository of "A Diffusion Model Framework for Unsupervised Neural Combinatorial Optimization"
 
-https://arxiv.org/abs/2406.01661
+# **Official Repository of the ICML 2024 Paper**
+## **[A Diffusion Model Framework for Unsupervised Neural Combinatorial Optimization](https://arxiv.org/abs/2406.01661)**
+
+### **Authors:**  
+**Sebastian Sanokowski** , **Sepp Hochreiter** , **Sebastian Lehner**
+
+
+
 
 ## Installing the environment
 
@@ -55,11 +61,12 @@ python argparse_ray_main.py --lrs 0.002 --GPUs 0 --n_GNN_layers 8 --temps 0.6 --
 `--noise_potential` Noise Distribution that is used during training \
 `--batch_size` Number of different CO Instances in each batch\
 `--n_basis_sates` Number of sampled Diffusion Trajectories in each CO Instance\
-`--temps` Starting temperature for annealing\
+`--temps` Starting temperature for annealing
 
-### DiffUCO - ICML 
+### DiffUCO
 You can run experiments as in the DiffUCO paper by setting `--train_mode REINFORCE` when running python `argparse_ray_main.py`.
 
+<!-- 
 ### DiffUCO - RL
 You can run DiffUCO with more steps by setting `--train_mode PPO` when running python `argparse_ray_main.py`.
 Then, DiffUCO is combined with RL to reduce memory requirements. \
@@ -73,6 +80,7 @@ When runnign DiffUCO-RL you can also set `--proj_mode CE` to project solutions t
 ### DiffUCO - Forward KL
 Alternatively, you can run DiffUCO with more steps by setting `--train_mode Forward_KL` when running python `argparse_ray_main.py`.
 (This has not been tested for a while.)
+-->
 
 ### To evaluate the model use "ConditionalExpectation.py".
 
@@ -80,6 +88,20 @@ After training, you can evaluate the model on the test set with:
 ```
 python ConditionalExpectation.py --wandb_id kj0bihnz --dataset RB_iid_100 --GPU 0 --evaluation_factor 3 --n_samples 8
 ```
+
+### model weights:
+The following model weights are made available:
+
+
+| CO Problem Type | Dataset   | Seed 1     | Seed 2     | Seed 3     |
+|-----------------|-----------|------------|------------|------------|
+| MaxCl           | RB_small  | k1zc0zgg   | yxyr9urj   | l3s6eybg   |
+| MIS             | RB_small  | m3h9mz5g   | olqaqfnl   | 08i3m2dl   |
+| MIS             | RB_large  | cvv1wla0   | fuu10c4p   | 00qoqw0s   |
+| MDS             | BA_large  | 64dnrg5p   | 107hsfqv   | 0liz28ec   |
+| MaxCut          | BA_small  | 114mqmhk   | t2ud5ttf   | icuxbpll   |
+| MaxCut          | BA_large  | ubti92kx   | c11rjsun   | c6yoqwmp   |
+
 
 ### parameter explanation
 `--wandb_id` is the wandb run id \

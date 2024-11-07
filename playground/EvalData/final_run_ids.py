@@ -110,6 +110,7 @@ MaxCut_large_dict = {
 
 }
 
+### old?
 MDS_large_fKL = ["1bxuoqyk", "7kitzopi", "uq21j7gp"]
 MDS_large_PPO = ["x2z3k811", "ukunkwov", "t95aukxn"]
 MDS_large_rKL = ["d0ipxvey", "oxsb0ors", "1fc4qeqq"]
