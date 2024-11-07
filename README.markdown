@@ -1,4 +1,6 @@
-# Official DiffUCO Repository
+# Official Repository of "A Diffusion Model Framework for Unsupervised Neural Combinatorial Optimization"
+
+https://arxiv.org/abs/2406.01661
 
 ## Installing the environment
 
