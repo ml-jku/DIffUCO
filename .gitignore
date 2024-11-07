@@ -3,7 +3,7 @@ __pycache__/
 *.py[cod]
 *$py.class
 
-Checkpoints/
+Checkpoints/*
 !Checkpoints/k1zc0zgg/
 !Checkpoints/m3h9mz5g/
 !Checkpoints/cvv1wla0/
