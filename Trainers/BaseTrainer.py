@@ -80,7 +80,8 @@ class Base(ABC):
         else:
             self.n_bernoulli_features = 2
 
-        if self.config["problem_name"] == "IsingModel":
+        self.unbiased_list = ["IsingModel", "SpinGlass"]
+        if self.config["problem_name"] in self.unbiased_list:
             self.T_target = self.config["T_target"]
             self.dataset_name = self.config["dataset_name"]
             self.beta = 1 / self.T_target
@@ -171,7 +172,7 @@ class Base(ABC):
             log_dict["time"]["CE"] = 0.
 
 
-        if (self.config["problem_name"] == "IsingModel" and epoch % int(epochs/50) == 0):
+        if (self.config["problem_name"] in self.unbiased_list  and epoch % int(epochs/50) == 0):
             jax.config.update("jax_enable_x64", True)
             if key is None:
                 key = jax.random.PRNGKey(0)

@@ -5,8 +5,9 @@ from .MaxClEnergy import MaxClEnergyClass
 from .MaxCutEnergy import MaxCutEnergyClass
 from .TSPEnergy import TSPEnergyClass
 from .IsingModelEnergy import IsingModelEnergyClass
+from .SpinGlass import SpinGlassEnergyClass
 
-noise_distribution_registry = {"MIS": MISEnergyClass, "MVC": MVCEnergyClass, "MaxCl": MaxClEnergyClass,
+noise_distribution_registry = {"MIS": MISEnergyClass, "MVC": MVCEnergyClass, "MaxCl": MaxClEnergyClass, "SpinGlass": SpinGlassEnergyClass,
                                "TSP": TSPEnergyClass, "MaxCut": MaxCutEnergyClass, "MDS": MDSEnergyClass, "IsingModel": IsingModelEnergyClass}
 
 
