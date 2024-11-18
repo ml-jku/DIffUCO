@@ -11,7 +11,7 @@ TSP_datasets = ['TSP_random_100', "TSP_random_20"]
 Gset = ["Gset"]
 IsingModel = ["NxNLattice_4x4", "NxNLattice_8x8", "NxNLattice_10x10", "NxNLattice_16x16", "NxNLattice_24x24", "NxNLattice_32x32"]
 SpinGlassdataset = ["SpinGlass_10x10", "SpinGlass_16x16"]
-SpinGlassUniformdataset = ["SpinGlassUniform_10x10"]
+SpinGlassUniformdataset = ["NxNLattice_10x10"]
 dataset_choices =  RB_datasets + BA_datasets + TSP_datasets + Gset + IsingModel + SpinGlassdataset + SpinGlassUniformdataset
 parser = argparse.ArgumentParser()
 

@@ -174,7 +174,7 @@ class Base(ABC):
             log_dict["time"]["CE"] = 0.
 
 
-        if (self.config["problem_name"] in self.unbiased_list  and epoch % int(epochs/50) == 0):
+        if (self.config["problem_name"] in self.unbiased_list  and epoch % int(epochs/50) == 0 and self.n_sampling_rounds > 0):
             jax.config.update("jax_enable_x64", True)
             if key is None:
                 key = jax.random.PRNGKey(0)
