@@ -4,8 +4,8 @@ from create_and_run_scripts import create_and_transfer_continue_script
 
 if(__name__ == "__main__"):
     ### TODO use whole node by running several jobs per node
-
-    wandb_ids = ["h07n3wco", "3njkgr0h", "nk7j1xjw", "cb16pgzu"]
+    ### This is meluxina?
+    wandb_ids = ["huuxp6dj", "pdz1tnjk", "703l8dui", "06uyle4b"]
     GPU_list = [1, 1, 1, 1]
 
     if(len(wandb_ids) != len(GPU_list)):

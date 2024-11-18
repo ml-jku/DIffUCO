@@ -8,8 +8,11 @@ from .TSPDatasetGenerator import TSPDatasetGenerator
 from .TSPDatasetGenerator import TSPDatasetGenerator
 from .GsetDatasetGenerator import GsetDatasetGenerator
 from .IsingModelDatasetGenerator import NxNLattice
+from .SpinGlassDatasetGenerator import SpinGlassDataset
+from .SpinGlassUniformDatasetGenerator import SpinGlassUniformDataset
 
-dataset_generator_registry = {"BA": BADatasetGenerator, "RB_iid": RBDatasetGenerator, "TSP": TSPDatasetGenerator, "Gset": GsetDatasetGenerator, "NxNLattice": NxNLattice}
+dataset_generator_registry = {"BA": BADatasetGenerator, "RB_iid": RBDatasetGenerator, "TSP": TSPDatasetGenerator, 
+							  "SpinGlass": SpinGlassDataset, "SpinGlassUniform": SpinGlassUniformDataset, "Gset": GsetDatasetGenerator, "NxNLattice": NxNLattice}
 
 
 def get_dataset_generator(config):

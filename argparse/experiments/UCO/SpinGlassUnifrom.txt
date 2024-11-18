@@ -1,0 +1,10 @@
+rKL w/o RL
+python argparse_ray_main.py --n_rand_nodes 0 --lrs 0.0005 --GPUs 0 --n_GNN_layers 8 --temps 4. --T_target 0. --IsingMode NxNLattice_10x10 --EnergyFunction SpinGlass --N_anneal 1600 --N_equil 0 --n_diffusion_steps 25 --diff_schedule exp --batch_size 1 --n_basis_states 200 --noise_potential bernoulli --project_name GroundState --seed 123 --mem_frac .9 --sampling-temp 0. --n_sampling_rounds 0 --train_mode REINFORCE --n_test_basis_states 300 --minib_basis_states 25 --graph_mode UNet --AnnealSchedule exp
+
+
+rKL w/ RL
+python argparse_ray_main.py --n_rand_nodes 0 --lrs 0.0005 --GPUs 1 --n_GNN_layers 8 --temps 4. --T_target 0. --IsingMode NxNLattice_10x10 --EnergyFunction SpinGlass --N_anneal 400 --N_equil 0 --n_diffusion_steps 100 --diff_schedule exp --batch_size 1 --n_basis_states 200 --noise_potential bernoulli --project_name GroundState --seed 123 --mem_frac .9 --sampling-temp 0. --n_sampling_rounds 0 --train_mode PPO --n_test_basis_states 300 --minib_basis_states 200 --minib_diff_steps 25 --graph_mode UNet --AnnealSchedule exp
+
+fKL w/ MC
+python argparse_ray_main.py --n_rand_nodes 0 --lrs 0.0005 --GPUs 2 --n_GNN_layers 8 --temps 4. --T_target 0. --IsingMode NxNLattice_10x10 --EnergyFunction SpinGlass --N_anneal 400 --N_equil 0 --n_diffusion_steps 100 --diff_schedule exp --batch_size 1 --n_basis_states 600 --noise_potential bernoulli --project_name GroundState --seed 123 --mem_frac .9 --sampling-temp 0. --n_sampling_rounds 0 --train_mode Forward_KL --n_test_basis_states 300 --minib_basis_states 200 --minib_diff_steps 25 --graph_mode UNet --AnnealSchedule exp
+

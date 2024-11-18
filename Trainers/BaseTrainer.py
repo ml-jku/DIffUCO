@@ -91,6 +91,8 @@ class Base(ABC):
                 self.size = 4
             elif "8x8" in self.dataset_name:
                 self.size = 8
+            elif "10x10" in self.dataset_name:
+                self.size = 10
             elif "16x16" in self.dataset_name:
                 self.size = 16
             elif "24x24" in self.dataset_name:

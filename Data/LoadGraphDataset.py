@@ -187,10 +187,6 @@ class SolutionDataset(Dataset):
         self.seed = seed
         self.relaxed = relaxed
 
-        if(self.mode == "SpinGlass"):
-            ### rename this here to Ising model so that 2-D grids from ising model are loaded
-            self.mode = "IsingModel"
-
         print("here")
         print(os.path.exist("/mnt/proj2/dd-23-97/"))
         if(os.path.exist("/mnt/proj2/dd-23-97/")):
@@ -279,10 +275,6 @@ class SolutionDataset_InMemory(Dataset):
         self.mode = mode
         self.seed = seed
         self.relaxed = relaxed
-
-        if(self.problem_name == "SpinGlass"):
-            ### rename this here to Ising model so that 2-D grids from ising model are loaded
-            self.problem_name = "IsingModel"
 
         self.n_diffusion_steps = self.config["n_diffusion_steps"]+ 1
         self.buffer_size = 1000

@@ -13,11 +13,11 @@ import os
 import os
 
 from Network.AutoregressiveNN import AutoregressiveNN
-#from Network.AutoregressiveGraphNN import AutoregressiveGraphNN
+from Network.AutoregressiveGraphNN import AutoregressiveGraphNN, AutoregressiveTrainer
 #from Network.AutoregressiveGraphNN import AutoregressiveTrainer
 from ImportanceSampler.ImportanceSamplerClass import calc_log_w_hat, free_energy
 from Jraph_creator.JraphCreator import create_graph
-from Energies.energy import hamiltonian
+from Energies.energy import energy_registry
 from ising_free_energy import calculate_ising_free_energy_exact
 
 import argparse
@@ -34,13 +34,16 @@ parser.add_argument('--beta_target', default=0.4407, type = float)
 parser.add_argument('--T_start', default=4., type = float)
 parser.add_argument('--n_layers', default=1, type = int)
 
-parser.add_argument('--nh_MLP', default=64, type = int)
-parser.add_argument('--nh_conv', default=64, type = int)
-parser.add_argument('--n_samples', default=8, type = int, help = "number of samples for each graph")
+parser.add_argument('--nh_MLP', default=16, type = int)
+parser.add_argument('--nh_conv', default=16, type = int)
+parser.add_argument('--n_samples', default=50, type = int, help = "number of samples for each graph")
 parser.add_argument('--lam', default=5, type = int, help = "scaling for anneal schedule")
 parser.add_argument('--eval_n_samples', default=250, type = int, help = "number of samples for each graph")
+parser.add_argument("--energy_func", default="Ising", type = str, choices=["Ising", "SpinGlass"], help = "energy function to use")
 
 args = parser.parse_args()
+
+hamiltonian = energy_registry(args.size, energy_func = args.energy_func)
 
 @partial(jax.jit, static_argnums=())
 def REINFORCE_loss(params, H_Graph, T, prev_sample_arr, sample):
@@ -52,15 +55,15 @@ def REINFORCE_loss(params, H_Graph, T, prev_sample_arr, sample):
     loss = jax.lax.stop_gradient(R)
 
     loss_reinforce = ((loss - loss.mean()) * log_prob_per_state).mean()
-    return loss_reinforce, (Energy)
+    return loss_reinforce, (Energy, log_prob_per_state)
 
 @partial(jax.jit, static_argnums=(0, 1))
 def train_step( num_spins, batch_size,T, H_Graph, state, key):
     sample, log_probs, prev_sample_arr, next_sample_arr = ann.generate_sample(num_spins, batch_size, state.params, key, 0)
-    print("sample shape", sample.shape)
-    (loss, (Energy)), grads = grad_fn( state.params, H_Graph, T, prev_sample_arr, sample)
+    #print("sample shape", sample.shape)
+    (loss, (Energy, log_prob_per_state)), grads = grad_fn( state.params, H_Graph, T, prev_sample_arr, sample)
     state = state.apply_gradients(grads=grads)
-    return state, loss, Energy
+    return state, loss, (Energy, log_prob_per_state)
 
 def cos_schedule(epoch, N_anneal, max_lr = 10**-3, min_lr = 10**-4, f_warmup = 0.025):
 	start_lr = 10**-10
@@ -89,7 +92,7 @@ def _init_wandb(config, id, project = ""):
     @param project: project name
     """
     if config["wandb"] is True:
-        wandb.init(project=project, name=f"{id}_T_init_{config['T_init']}", group=id, id=id,
+        wandb.init(project=project, name=f"{args.energy_func}_{id}_T_init_{config['T_init']}", group=id, id=id,
                    config=config, mode="online", settings=wandb.Settings(_service_wait=300))
 
 
@@ -108,7 +111,7 @@ def calculate_free_energy(ann, params, temp, H_Graph):
     sample, log_probs, _ , _ = ann.generate_sample(num_spins, eval_batch_size, params, key, 0)
     loglikelihood_vals = ann.log_likelihood(sample, log_probs)
 
-    log_w_hat = calc_log_w_hat(loglikelihood_vals, temp, H_Graph, sample)
+    log_w_hat = calc_log_w_hat(loglikelihood_vals, temp, H_Graph, sample, hamiltonian)
     O_F = free_energy(1 / target_temp, log_w_hat, int(math.sqrt(num_spins)))
     return O_F
 
@@ -169,26 +172,35 @@ if __name__ == "__main__":
     _init_wandb(wandb_config, wandb_id, project = f"AR_Ising_{n}x{n}")
     wandb_run_id = wandb.run.id
     print("Starting run with run id", wandb_run_id)
-    ann = AutoregressiveNN(grid_size = n, n_layers = args.n_layers, features = args.nh_MLP, cnn_features = args.nh_conv)
+    H_Graph = create_graph(int(jnp.sqrt(num_spins)))
+    if(args.energy_func == "Ising"):
+        ann = AutoregressiveNN(grid_size = n, n_layers = args.n_layers, features = args.nh_MLP, cnn_features = args.nh_conv)
+    else:
+        np.random.seed(0)
+        half_edges = np.random.normal(0,1, (H_Graph.senders.shape[0]//2,1))
+        edges = np.concatenate([half_edges, half_edges], axis = -1)
+        edges = np.ravel(edges)[:, None]
+        H_Graph = H_Graph._replace(edges = jnp.array(edges))
+        ann = AutoregressiveGraphNN(n_message_passes = args.n_layers, nh = args.nh_MLP)
     vmap_compute_log_likelihood_of_sample = jax.vmap(ann.compute_log_likelihood_of_sample, in_axes=(None, 1, 0),
                                                      out_axes=(0))
     grad_fn = jax.value_and_grad(lambda a, b, c, d, e: REINFORCE_loss(a, b, c, d, e), has_aux=True)
     #ann = AutoregressiveGraphNN()
     #ann_trainer = AutoregressiveTrainer(ann, batch_size = batch_size)
     # create graph
-    H_Graph = create_graph(int(jnp.sqrt(num_spins)))
     # Create train state
     state = create_train_state(ann, H_Graph, key, learning_rate, num_spins, epochs)
     epochs = args.epochs
     O_F_exact = calculate_ising_free_energy_exact(1 / target_temp, n)
     for epoch in range(epochs):
-        print("curr epoch is", epoch)
         current_temp = anneal_temp(initial_temp, target_temp, epochs, epoch)
         key, subkey = jax.random.split(key)
-        state, loss, energy = train_step(num_spins, batch_size, current_temp, H_Graph, state, subkey)
+        state, loss, (energy, _) = train_step(num_spins, batch_size, current_temp, H_Graph, state, subkey)
+
         wandb.log({"loss": loss})
         wandb.log({"T": float(current_temp)})
         wandb.log({"Energy": float(energy.mean())})
+        print("curr epoch is", epoch, loss)
 
         if epoch % 100 == 0:
             # test for temperature

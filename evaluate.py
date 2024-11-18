@@ -15,6 +15,15 @@ parser.add_argument('--n_test_basis_states', default=400, type = int, help="eps 
 args = parser.parse_args()
 # python evaluate.py --wandb_id hlmw6stl  --GPU MIG-c69ed117-8436-51d1-b4db-183ea0228cd6 --exp 0. 0.01 0.05 --n_sampling_rounds 400 --sampling_modes temps
 
+def SpinGlass_16x16():
+    ### PPO id # 9c8t3sl0
+    #python evaluate.py --wandb_id 9c8t3sl0  --GPU 2 --exp 0. --n_sampling_rounds 400 --sampling_modes temps --n_test_basis_states 1200 --seeds 3
+    ###fKL # ygwjc1f4
+    #python evaluate.py --wandb_id ygwjc1f4  --GPU 3 --exp 0. --n_sampling_rounds 400 --sampling_modes temps --n_test_basis_states 1200 --seeds 3
+    ### rKL # wr7i4oy9
+    #python evaluate.py --wandb_id wr7i4oy9  --GPU 4 --exp 0. --n_sampling_rounds 400 --sampling_modes temps --n_test_basis_states 1200 --seeds 3   
+    pass
+
 def good_wandb_ids():
     fKL = {"f0cszhfv": {"n_diff_steps": 30, "T_start": 10} , "1838jcin": {"n_diff_steps": 60, "T_start": 10}, "hlmw6stl": {"n_diff_steps": 100, "T_start": 10}}
     PPO = {"9lu3ahbm": {"n_diff_steps": 30, "T_start": 10}, "ts7dch2k": {"n_diff_steps": 30, "T_start": 4}}

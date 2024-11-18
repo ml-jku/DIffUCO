@@ -170,6 +170,21 @@ MIS_100_dict = {
     "graph_norm": MIS_100_graph_norm,
 }
 
+
+diff_steps = [4,8,12,16]
+MIS_small_fKL = ["azx4ctuf", "wno5zlcg", "lf9b0glc", "5ck9ydrq"]
+MIS_small_rKL = ["sqgmhosx", "k27lzwki", "lm6nwmd9", "gliujcf1"]
+MIS_small_PPO = ["1e119d1y", "29oajlej", "shhasbii", "tsdgkzq8"]
+MIS_small_Scaling_dict = {
+    "PPO": MIS_small_PPO,
+    "rKL": MIS_small_rKL,
+    "fKL": MIS_small_fKL,
+}
+fKL_results = {"mean": [18.61,], "std": [0.08]}
+rKL_results = {"mean": [19.27, ], "std": [0.1]}
+PPO_results = {"mean": [19.3, ], "std": [0.11]}
+
+
 def seconds_to_hms(seconds):
     # Calculate hours, minutes, and remaining seconds
     hours = seconds // 3600
@@ -230,10 +245,10 @@ def wilcoxon_test(method_result_dict, method_1, method_2):
             print(metric_key, method_1, method_2, result, wilcoxon(diffs, alternative = "greater"), wilcoxon(diffs, alternative = "less"))
 
 
-def best_energy_runs(GPU_num = "0", measure_time = False, n_samples = 150, batch_size = 1):
+def best_energy_runs(GPU_num = "0", measure_time = False, n_samples = 60, batch_size = 1):
     ### TODO MIS large is missing here!
-    wandb_dict_list = [MIS_large_dict]
-    datasets = ["RB_iid_large"]
+    wandb_dict_list = [MIS_small_Scaling_dict]
+    datasets = ["RB_iid_small"]
 
     method_run_list = []
     for method_dict, dataset in zip(wandb_dict_list, datasets):
@@ -242,7 +257,7 @@ def best_energy_runs(GPU_num = "0", measure_time = False, n_samples = 150, batch
             for method_wandb_id in method_dict[key]:
                 str = str + " " + method_wandb_id
 
-        overall_run_sting = f"python ConditionalExpectation.py  --GPU {GPU_num} --evaluation_factors 3 --n_samples {n_samples} --batch_size {batch_size} --dataset {dataset} --wandb_id {str};"
+        overall_run_sting = f"python ConditionalExpectation.py  --GPU {GPU_num} --evaluation_factors 1 --n_samples {n_samples} --batch_size {batch_size} --dataset {dataset} --wandb_id {str};"
         method_run_list.append(overall_run_sting)
 
     print_str = ""
@@ -277,8 +292,8 @@ def measure_time_runs(GPU_num = "0", measure_time = True, n_samples = 30, batch_
     print(print_str)
 
 def mean_energy_runs(GPU_num = "4", measure_time = False, n_samples = 30, batch_size = 30):
-    wandb_dict_list = [MIS_100_dict]
-    datasets = ["RB_iid_100"]
+    wandb_dict_list = [MIS_small_Scaling_dict]
+    datasets = ["RB_iid_small"]
 
     method_run_list = []
     for method_dict, dataset in zip(wandb_dict_list, datasets):
@@ -288,7 +303,7 @@ def mean_energy_runs(GPU_num = "4", measure_time = False, n_samples = 30, batch_
             for method_wandb_id in method_dict[key]:
                 str = str + " " + method_wandb_id
 
-        overall_run_sting = f"python ConditionalExpectation.py  --GPU {GPU_num} --evaluation_factors 3 --n_samples {n_samples} --batch_size {batch_size} --dataset {dataset} --wandb_id {str};"
+        overall_run_sting = f"python ConditionalExpectation.py  --GPU {GPU_num} --evaluation_factors 1 --n_samples {n_samples} --batch_size {batch_size} --dataset {dataset} --wandb_id {str};"
         method_run_list.append(overall_run_sting)
 
     print_str = ""
@@ -327,7 +342,11 @@ if(__name__ == "__main__"):
     # calc_mean_and_std(MIS_100_dict, read_and_get_best_energy)
     #raise ValueError("")
 
-    best_energy_runs(GPU_num="4")
+    print("MIS small Scaling")
+    calc_mean_and_std(MIS_small_Scaling_dict, lambda a: read_and_get_mean_energy(a, eval_steps = 1, n_states = 30))
+    calc_mean_and_std(MIS_small_Scaling_dict, lambda a: read_and_get_best_energy(a, eval_steps = 1, n_states = 60))
+
+    best_energy_runs(GPU_num="3")
     mean_energy_runs(GPU_num="6",batch_size = 30)
-    measure_time_runs(GPU_num="6", filter = "rKL")
+    #measure_time_runs(GPU_num="6", filter = "rKL")
 

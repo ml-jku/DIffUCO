@@ -54,7 +54,9 @@ class UpBlock(nn.Module):
 @partial(jax.jit, static_argnums=1)
 def reshape_to_grid(x, size):
     x_new = x[:-1]
+    pos_x, pos_y = jnp.meshgrid(jnp.arange(size), jnp.arange(size), indexing='ij')
     x_resh = x_new.reshape(size,size, x_new.shape[-1])
+    x_resh = jnp.concatenate([x_resh, pos_x[...,jnp.newaxis]/size - 0.5, pos_y[...,jnp.newaxis]/size - 0.5], axis = -1)
 
     return x_resh
 
@@ -76,12 +78,14 @@ class UNet(nn.Module):
     def __call__(self, H_graph, x):
         # Encoder
         x = reshape_to_grid(x, self.size)
+        print("UNET", x.shape)
         x = ReluMLP(n_features_list=[self.features], dtype = jnp.float32)(x)
         pow = 1
         skip_features = []
         for n_layer in range(self.n_layers):
             x, skip1 = DownBlock(self.features*pow)(x)
             pow *= 2
+            print("UNET down", x.shape)
             skip_features.append(skip1)
 
         # Bottleneck

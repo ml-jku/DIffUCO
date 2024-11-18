@@ -594,18 +594,52 @@ def solveMaxCut(H_graph, time_limit=float("inf"), solution_limit=None, num_CPUs 
     solutions = np.array([var_dict[key].x for key in var_dict])
     MaxCut_value = sum([ (1-(2*solutions[int(s)]-1) *weight* (2*solutions[int(r)]-1))/4 for s, r, weight in zip(senders, receivers, edges)])
 
-    # spins = 2*solutions -1
-    # MaxCut_value_2 = H_graph.n_edge[0]/4 - np.sum((spins[senders]*spins[receivers])/4)
-    # # MaxCut_value_3 = np.sum((spins[senders]*spins[senders])/4) - np.sum((spins[senders] * spins[receivers]) / 4)
-    # edges = [(min([r,s]),max([r,s])) for (s,r) in zip(senders, receivers)]
-    # MaxCut_value_3 = len(set(edges)) / 2 - np.sum((spins[senders] * spins[receivers]) / 4)
-    # print(len(edges), len(set(edges)), "double edges")
-    # print(MaxCut_value, MaxCut_value_2, MaxCut_value_3)
-    # mccc = len(set(edges)) / 2  - m.ObjVal/2
-    # print(mccc, m.ObjVal)
-    # print("Energy solver", m.ObjVal)
-
     return m, m.ObjVal, m.objBound, np.array([var_dict[key].x for key in var_dict]), m.Runtime, MaxCut_value
+
+def solveSpinGlass(H_graph, time_limit=float("inf"), solution_limit=None, num_CPUs = None, verbose=0, measure_time = False, bnb = False, model_name = "mip1", thread_fraction = 0.75):
+    N = int(H_graph.n_node[0])
+    senders = H_graph.senders
+    receivers = H_graph.receivers
+    edges = H_graph.edges
+
+    m = g.Model(model_name)
+    m.setParam("OutputFlag", verbose)
+    m.setParam("TimeLimit", time_limit)
+
+    if(measure_time):
+        m.setParam("Threads", 1)
+        m.setParam("OutputFlag", 1)
+    elif(num_CPUs == None):
+        print("Default value of the Threads parameter:", m.Params.Threads)
+        m.setParam("Threads", int(thread_fraction*multiprocessing.cpu_count()))
+    else:
+        m.setParam("Threads", int(num_CPUs))
+
+    if(bnb):
+        m.setParam("Heuristics", 0)
+        m.setParam("Cuts", 0)
+        m.setParam("RINS", 0)
+        m.setParam("Presolve", 0)
+        m.setParam("Aggregate", 0)
+        m.setParam("Symmetry", 0)
+        m.setParam("Disconnected", 0)
+    if not isinstance(solution_limit, type(None)):
+        m.setParam("SolutionLimit", solution_limit)
+
+    # var_dict = {}
+    # for i in range(N):
+    #     var_dict[i] = m.addVar(vtype=g.GRB.BINARY, name=f'{i}')
+
+    var_dict = m.addVars(N, vtype=g.GRB.BINARY)
+
+    obj1 = g.quicksum( -0.5*(2*var_dict[int(s)]-1) *weight* (2*var_dict[int(r)]-1) for s, r, weight in zip(senders, receivers, edges))
+    #obj2 = g.quicksum(  (2*var_dict[int(n)]-1) * (2*var_dict[int(n)]-1)/4  for n in range(N))
+
+    m.setObjective(obj1, g.GRB.MINIMIZE)
+    m.optimize()
+
+    return m, m.ObjVal, m.objBound, np.array([var_dict[key].x for key in var_dict]), m.Runtime
+
 
 def solveMaxCut_as_IP(H_graph, time_limit=float("inf"), solution_limit=None, verbose=0, measure_time = False, bnb = True, model_name = "mip1"):
     N = int(H_graph.n_node[0])

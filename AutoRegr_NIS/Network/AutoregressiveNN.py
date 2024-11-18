@@ -26,6 +26,15 @@ class AutoregressiveNN(nn.Module):
     def __call__(self, x):
         L = self.grid_size
         x = x.reshape(( x.shape[0],L, L, 1))
+        size = L
+        pos_x, pos_y = jnp.meshgrid(jnp.arange(size), jnp.arange(size), indexing='ij')
+        pos_x = jnp.repeat(pos_x[None,...,jnp.newaxis], x.shape[0], axis = 0)
+        pos_y = jnp.repeat(pos_y[None,...,jnp.newaxis], x.shape[0], axis = 0)
+
+        x = jnp.concatenate([x, pos_x/size - 0.5, pos_y/size - 0.5], axis = -1)
+
+        #print("x.shape", x.shape)
+        #print(x)
         x = UNet(n_layers = self.n_layers, features=self.cnn_features )(x)
 
         x = x.reshape((x.shape[0], x.shape[1]*x.shape[2], x.shape[3]))
@@ -37,6 +46,7 @@ class AutoregressiveNN(nn.Module):
         x = nn.relu(x)
         x = nn.Dense(features=2)(x)
         x = nn.log_softmax(x)
+        #print("log softmax", x)
         return x
 
 

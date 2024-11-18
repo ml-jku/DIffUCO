@@ -7,7 +7,7 @@ from .MLPs import ReluMLP
 class ConvBlock(nn.Module):
     """A simple 2D convolutional block with optional batch normalization and ReLU activation."""
     features: int
-    padding: str = "VALID"
+    padding: str = "CIRCULAR"
     @nn.compact
     def __call__(self, x):
         x = nn.Conv(self.features, kernel_size=(3, 3), padding=self.padding)(x)
@@ -33,7 +33,7 @@ class DownBlock(nn.Module):
 class UpBlock(nn.Module):
     """An upsampling block with transposed convolution followed by a ConvBlock."""
     features: int
-    padding: str = "VALID"
+    padding: str = "CIRCULAR"
     def crop_and_concat(self, upsampled, skip):
         """Crop the skip connection to match the size of the upsampled feature map."""
         # Calculate the amount of cropping needed
@@ -46,7 +46,9 @@ class UpBlock(nn.Module):
 
     @nn.compact
     def __call__(self, x, skip):
+        #print("conv_transpose", x.shape)
         x = nn.ConvTranspose(self.features, kernel_size=(2, 2), strides=(2, 2), padding=self.padding)(x)
+        #print("conv_transpose after", x.shape)
         x = self.crop_and_concat(x, skip)
         x = ConvBlock(self.features)(x)
         return x
@@ -61,12 +63,14 @@ class UNet(nn.Module):
     def __call__(self, x):
         # Encoder
         x = ReluMLP(n_features_list=[self.features], dtype = jnp.float32)(x)
+        #print("RELU",x.shape)
         pow = 1
         skip_features = []
         for n_layer in range(self.n_layers):
             x, skip1 = DownBlock(self.features*pow)(x)
             pow *= 2
             skip_features.append(skip1)
+            #print("RELU down",x.shape)
 
         # Bottleneck
         x = ConvBlock(self.features * pow)(x)
@@ -79,10 +83,13 @@ class UNet(nn.Module):
 
         for idx  in range(self.n_layers):
             pow = int(pow/2)
+            #print("RELU up",x.shape, skip_features[-1-idx].shape)
             x = UpBlock(self.features * pow)(x, skip_features[-1-idx])
+            #print("RELU after",x.shape)
 
         # Output layer
         #x = nn.Conv(self.num_classes, kernel_size=(1, 1), padding='SAME')(x)
+        #print("RELU2",x.shape)
         return x
 
 

@@ -10,7 +10,6 @@ import sys
 sys.path.append("..")
 from Network.AutoregressiveNN import AutoregressiveNN
 from Jraph_creator.JraphCreator import create_graph
-from Energies.energy import hamiltonian
 from ising_free_energy import calculate_ising_free_energy_exact
 from internal_energy import calculate_ising_internal_energy
 
@@ -27,7 +26,7 @@ def free_energy_bounds(beta, log_w_hat, L):
 
     return -jnp.log(Z_hat + std_error) / beta / L ** 2, -jnp.log(Z_hat - std_error) / beta / L ** 2
 
-def calc_log_w_hat(log_prob_per_state, target_temp, H_Graph, sample):
+def calc_log_w_hat(log_prob_per_state, target_temp, H_Graph, sample, hamiltonian):
     log_prob_boltz = -(1 / target_temp) * hamiltonian(H_Graph, sample)
     log_w_hat = log_prob_boltz - log_prob_per_state
     return log_w_hat
@@ -37,7 +36,7 @@ def calculate_eff_sample_size(log_w_hat):
     n_eff = (jnp.sum(w_hat))**2/jnp.sum(w_hat**2)/w_hat.shape[0]
     return n_eff
 
-def calculate_inner_energy(H_Graph, sample, log_w_hat, L):
+def calculate_inner_energy(H_Graph, sample, log_w_hat, L, hamiltonian):
     Energy = hamiltonian(H_Graph, sample)
     inner_energy = jnp.sum(jax.nn.softmax(log_w_hat, axis = -1)*Energy)/ L ** 2
     return inner_energy
@@ -50,7 +49,8 @@ def calculate_entropy( beta, internal_energy, free_energy):
 
 class ImportanceSampler():
 
-    def __init__(self):
+    def __init__(self, hamiltonian):
+        self.hamiltonian = hamiltonian
         pass
     def run(self, H_Graph, target_temp, num_spins, ann, sample, log_probs):#
         beta = 1/target_temp
@@ -60,7 +60,7 @@ class ImportanceSampler():
         # w_hat = jnp.exp(-(1/target_temp) * hamiltonian(H_Graph, sample)) / x_hat_
 
         ######
-        log_w_hat = calc_log_w_hat(loglikelihood_vals, target_temp, H_Graph, sample)
+        log_w_hat = calc_log_w_hat(loglikelihood_vals, target_temp, H_Graph, sample, self.hamiltonian)
 
         # eq. (6)
         O_F = free_energy(1 / target_temp, log_w_hat, int(math.sqrt(num_spins)))
@@ -73,7 +73,7 @@ class ImportanceSampler():
         O_S_exact = calculate_entropy(beta, O_E_exact, O_F_exact)
         #jax.debug.print("Free energy exact: {}", O_F_exact)
         #jax.debug.print("Difference: {}", O_F - O_F_exact)
-        Inner_Energy = calculate_inner_energy(H_Graph, sample, log_w_hat, int(math.sqrt(num_spins)))
+        Inner_Energy = calculate_inner_energy(H_Graph, sample, log_w_hat, int(math.sqrt(num_spins)), self.hamiltonian)
         Entropy_Estimate = calculate_entropy(beta, Inner_Energy, O_F)
         effective_sample_size = calculate_eff_sample_size(log_w_hat)
 
