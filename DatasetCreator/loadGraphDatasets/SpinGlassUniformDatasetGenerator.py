@@ -98,7 +98,7 @@ class SpinGlassUniformDataset(BaseDatasetGenerator):
 		receivers = np.ravel(receivers)
 		senders = np.concatenate([undir_senders[:, np.newaxis], undir_receivers[:, np.newaxis]], axis=-1)
 		senders = np.ravel(senders)
-		np.random.seed(0)
+		np.random.seed(self.seed - 123)
 		half_edges = 2*np.random.uniform((undir_senders.shape[0], 1))-1
 		edges =  np.concatenate([half_edges, half_edges], axis=-1)
 		edges = np.ravel(edges)[:,None]

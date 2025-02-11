@@ -1,9 +1,13 @@
 
-# **Official Repository of the ICML 2024 Paper**
-## **[A Diffusion Model Framework for Unsupervised Neural Combinatorial Optimization](https://arxiv.org/abs/2406.01661)**
+### **Official Repository of the ICML 2024 Paper**
+### **[A Diffusion Model Framework for Unsupervised Neural Combinatorial Optimization](https://arxiv.org/abs/2406.01661)** (DiffUCO)
 
-### **Authors:**  
-**Sebastian Sanokowski** , **Sepp Hochreiter** , **Sebastian Lehner**
+#### **Authors:**  
+ **Sebastian Sanokowski** , **Sepp Hochreiter** , **Sebastian Lehner**
+
+### **and of the ICLR 2025 Paper**
+### **[Scalable Discrete Diffusion Samplers: Combinatorial Optimization and Statistical Physics](https://openreview.net/forum?id=peNgxpbdxB)** (SDDS)
+
 
 
 
@@ -66,31 +70,45 @@ python argparse_ray_main.py --lrs 0.002 --GPUs 0 --n_GNN_layers 8 --temps 0.6 --
 ### DiffUCO
 You can run experiments as in the DiffUCO paper by setting `--train_mode REINFORCE` when running python `argparse_ray_main.py`.
 
-<!-- 
-### DiffUCO - RL
+
+### SDDS: rKL w/ RL
 You can run DiffUCO with more steps by setting `--train_mode PPO` when running python `argparse_ray_main.py`.
 Then, DiffUCO is combined with RL to reduce memory requirements. \
 Here, you have to specify the mini-batch size for the inner loops steps within PPO. \
 When running DiffUCO with `--n_diffusion_steps A` and `--n_basis_states B` you have to set `--minib_diff_steps X` and `--minib_basis_states Y` 
 so that `A/X` and ` B/Y` are integers.
 
-#### Advanced Settings
-When runnign DiffUCO-RL you can also set `--proj_mode CE` to project solutions to feasible solutions during training.
 
-### DiffUCO - Forward KL
+### SDDS: fKL w/ MC
 Alternatively, you can run DiffUCO with more steps by setting `--train_mode Forward_KL` when running python `argparse_ray_main.py`.
 (This has not been tested for a while.)
--->
+
 
 ### To evaluate the model use "ConditionalExpectation.py".
 
 After training, you can evaluate the model on the test set with:
 ```
-python ConditionalExpectation.py --wandb_id kj0bihnz --dataset RB_iid_100 --GPU 0 --evaluation_factor 3 --n_samples 8
+python ConditionalExpectation.py --wandb_id <WANDB_ID> --dataset <DATASET_NAME> --GPU <GPU_ID> --evaluation_factor <EVAL_FACTOR> --n_samples <N_SAMPLES>
 ```
+In the papers `<EVAL_FACTOR>` is set to 3, i.e. the model uses 3 times more diffusion steps during evaluation than during training.
+
+
+### parameter explanation
+`--wandb_id` is the wandb run id \
+`--dataset` is the dataset that will be used for evaluation\
+`--GPU` is the GPu that will beused for evaluation \
+`--n_samples` is the numer of samples that will be obtained for each graph \
+`--evaluation_factor` is the factor by which the number of diffusion steps is increased compared to the number 
+of diffusion steps that are used during training. So for example if the model is trained with 5 diffusion steps and 
+`--evaluation_factor 3`, then the model will be evaluated with 15 diffusion steps
+
+### configs:
+
+All configs from the paper SDDS can be found in argparse/experiments/Ising for experiments in unbiased sampling and in argparse/experiments/UCO for experiments in combinatorial optimization.
 
 ### model weights:
 The following model weights are made available:
+- Weights for DiffUCO from the SDDS paper
 
 
 | CO Problem Type | Dataset   | Seed 1     | Seed 2     | Seed 3     |
@@ -102,12 +120,27 @@ The following model weights are made available:
 | MaxCut          | BA_small  | 114mqmhk   | t2ud5ttf   | icuxbpll   |
 | MaxCut          | BA_large  | ubti92kx   | c11rjsun   | c6yoqwmp   |
 
+- Weights for SDDS: rKL w/ RL from the SDDS paper
 
-### parameter explanation
-`--wandb_id` is the wandb run id \
-`--dataset` is the dataset that will be used for evaluation\
-`--GPU` is the GPu that will beused for evaluation \
-`--n_samples` is the numer of samples that will be obtained for each graph \
-`--evaluation_factor` is the factor by which the number of diffusion steps is increased compared to the number 
-of diffusion steps that are used during training. So for example if the model is trained with 5 diffusion steps and 
-`--evaluation_factor 3`, then the model will be evaluated with 15 diffusion steps
+
+| CO Problem Type | Dataset   | Seed 1     | Seed 2     | Seed 3     |
+|-----------------|-----------|------------|------------|------------|
+| MaxCl           | RB_small  |    |    |    |
+| MIS             | RB_small  |    |    |    |
+| MIS             | RB_large  |    |    |    |
+| MDS             | BA_large  |    |    |    |
+| MaxCut          | BA_small  |    |    |    |
+| MaxCut          | BA_large  |    |    |    |
+
+- Weights for SDDS: w/ MC from the SDDS paper
+
+
+| CO Problem Type | Dataset   | Seed 1     | Seed 2     | Seed 3     |
+|-----------------|-----------|------------|------------|------------|
+| MaxCl           | RB_small  |    |    |    |
+| MIS             | RB_small  |    |    |    |
+| MIS             | RB_large  |    |    |    |
+| MDS             | BA_large  |    |    |    |
+| MaxCut          | BA_small  |    |    |    |
+| MaxCut          | BA_large  |    |    |    |
+

@@ -619,7 +619,7 @@ class TrainMeanField:
 		if (epoch < self.N_warmup):
 			T_curr = self.T_max
 		elif(epoch >= self.N_warmup and epoch <= self.epochs - self.N_equil - 1):
-			factor = 1500
+			factor = 4000
 			T_curr = self.T_target*1/(1- 0.998**(factor*((epoch - self.N_warmup +1 )/self.epochs )))
 		else:
 			T_curr = self.T_target
@@ -984,8 +984,10 @@ class TrainMeanField:
 					print(key)
 				res = np.concatenate(np.concatenate(wandb_log_dict[key], axis=1), axis=0)
 				eval_log_dict[f"{mode}/" + key] = np.mean(res)
+				eval_log_dict[f"{mode}/" + "std" + key] = np.std(res)
 			except:
 				eval_log_dict[f"{mode}/" + key] = np.mean(wandb_log_dict[key])
+				eval_log_dict[f"{mode}/" + "std" + key] = np.std(wandb_log_dict[key])
 
 		self.__save_test_dict(eval_log_dict, self.TrainerClass.eval_step_factor)
 

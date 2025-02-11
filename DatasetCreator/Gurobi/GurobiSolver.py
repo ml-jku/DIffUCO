@@ -626,6 +626,9 @@ def solveSpinGlass(H_graph, time_limit=float("inf"), solution_limit=None, num_CP
     if not isinstance(solution_limit, type(None)):
         m.setParam("SolutionLimit", solution_limit)
 
+    m.setParam("MIPGap", 0)     # 1% relative gap
+    m.setParam("MIPGapAbs", 0)
+
     # var_dict = {}
     # for i in range(N):
     #     var_dict[i] = m.addVar(vtype=g.GRB.BINARY, name=f'{i}')

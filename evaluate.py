@@ -16,12 +16,13 @@ args = parser.parse_args()
 # python evaluate.py --wandb_id hlmw6stl  --GPU MIG-c69ed117-8436-51d1-b4db-183ea0228cd6 --exp 0. 0.01 0.05 --n_sampling_rounds 400 --sampling_modes temps
 
 def SpinGlass_16x16():
+    ### TODO test influce of eps
     ### PPO id # 9c8t3sl0
-    #python evaluate.py --wandb_id 9c8t3sl0  --GPU 2 --exp 0. --n_sampling_rounds 400 --sampling_modes temps --n_test_basis_states 1200 --seeds 3
+    #python evaluate.py --wandb_id sw5qr5e6  --GPU 2 --exp 0. --n_sampling_rounds 400 --sampling_modes temps --n_test_basis_states 1200 --seeds 9
     ###fKL # ygwjc1f4
-    #python evaluate.py --wandb_id ygwjc1f4  --GPU 3 --exp 0. --n_sampling_rounds 400 --sampling_modes temps --n_test_basis_states 1200 --seeds 3
+    #python evaluate.py --wandb_id 4hl3jr35  --GPU 3 --exp 0. --n_sampling_rounds 400 --sampling_modes temps --n_test_basis_states 1200 --seeds 9
     ### rKL # wr7i4oy9
-    #python evaluate.py --wandb_id wr7i4oy9  --GPU 4 --exp 0. --n_sampling_rounds 400 --sampling_modes temps --n_test_basis_states 1200 --seeds 3   
+    #python evaluate.py --wandb_id m7fi604s  --GPU 6 --exp 0. --n_sampling_rounds 400 --sampling_modes temps --n_test_basis_states 1200 --seeds 9   
     pass
 
 def good_wandb_ids():

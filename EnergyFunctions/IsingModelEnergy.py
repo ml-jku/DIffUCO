@@ -24,6 +24,7 @@ class IsingModelEnergyClass(BaseEnergyClass):
 		Energy = - 1/2 * jax.ops.segment_sum(Energy_per_node, node_gr_idx, n_graph)
 
 		return Energy, bins, Energy
+	
 	def calculate_relaxed_Energy(self, H_graph, bins, node_gr_idx):
 		self.calculate_Energy(H_graph, bins, node_gr_idx)
 

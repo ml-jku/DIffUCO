@@ -164,7 +164,9 @@ class Base(ABC):
                 start_CE_time = time.time()
                 X_0_CE, energies_CE, Hb_per_node = self.pmap_apply_CE_on_p(energy_graph_batch, p_0)
                 end_CE_time = time.time()
-                log_dict["metrics"]["X_0_CE"], log_dict["metrics"]["energies_CE"] = X_0_CE, energies_CE[:,:-1]
+                ####remove padded energies
+                last_node_idx = jnp.sum(energy_graph_batch.n_node[0, 0:-1])
+                log_dict["metrics"]["X_0_CE"], log_dict["metrics"]["energies_CE"] = X_0_CE[:, :last_node_idx, ...], energies_CE[:,:-1]
                 log_dict["time"]["CE"] = end_CE_time - start_CE_time
             else:
                 log_dict["metrics"]["X_0_CE"] = log_dict["metrics"]["X_0"]

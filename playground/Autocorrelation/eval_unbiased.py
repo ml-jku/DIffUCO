@@ -220,6 +220,7 @@ def plot_result_dict(run_id):
                      alpha=0.5, label=f"sampling_temp = {sampling_temp}")
 
         print("eff sample size at", sampling_temp, "is $",  effective_sample_size[-1] / n_states[-1], "\pm", effective_sample_size_std[-1] / n_states[-1], "$")
+        print("len seeds", seeds)
     plt.plot(n_states, 1 / n_states, "-", label="worst eff sample size")
     plt.legend()
     plt.yscale("log")
@@ -260,8 +261,24 @@ if __name__ == "__main__":
         print("final MCMC energy", np.mean(MCMC_energies), np.std(MCMC_energies)/np.sqrt(len(MCMC_energies)))
         return log_dict
 
-    run_id = "qkfzunur"
+    # run_id = "qkfzunur"
+    # plot_result_dict(run_id)
+
+    # run_id = "ewmsen06"
+    # plot_result_dict(run_id)
+
+    # REINFORCE
+    run_id = "m7fi604s"
     plot_result_dict(run_id)
 
-    run_id = "ewmsen06"
+    # # PPO
+    # run_id = "sw5qr5e6"
+    # plot_result_dict(run_id)
+
+    # PPO
+    run_id = "5j75a3k9"
+    plot_result_dict(run_id)
+
+    # fKL
+    run_id = "4hl3jr35"
     plot_result_dict(run_id)
