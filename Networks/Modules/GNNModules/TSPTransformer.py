@@ -78,7 +78,9 @@ class TSPTransformer(nn.Module):
         X_pos_encoding = jnp.reshape(X_pos_encoding, (j_graph.n_node.shape[0], -1 , X_pos_encoding.shape[-1]))
 
 
-        overall_input = jnp.concatenate([X_pos_encoding, X_states], axis = -1)
+        padded_overall_input = jnp.concatenate([X_pos_encoding, X_states], axis = -1)
+        ### remove the batch that is there for padding
+        overall_input = padded_overall_input[:-1]
         overall_input = self.node_encoder(overall_input)
 
         for transformer, ln1, ln2, MLP_layer in zip(self.TransformerLayer, self.layer_norms1, self.layer_norms2, self.MLP_layer):
@@ -86,7 +88,6 @@ class TSPTransformer(nn.Module):
             intermediate_input = ln1(transformed_input + overall_input)
 
             overall_input = ln1(intermediate_input + MLP_layer(intermediate_input))
-
         #overall_input = self.node_decoder(overall_input)
         #overall_input = jnp.reshape(overall_input, original_shape + (overall_input.shape[-1],))
         return overall_input

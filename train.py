@@ -131,9 +131,9 @@ class TrainMeanField:
 
 		if(self.problem_name == "TSP"):
 			self.config["n_features_list_prob"] = [120,120,self.n_bernoulli_features]
-		if(self.problem_name == "IsingModel"):
+		elif(self.problem_name == "IsingModel"):
 			self.config["n_features_list_prob"] = [64,64,self.n_bernoulli_features]
-		else:
+		else:		
 			self.config["n_features_list_prob"] = [120,64,2]
 
 		self.n_features_list_prob = self.config["n_features_list_prob"]
@@ -477,69 +477,6 @@ class TrainMeanField:
 			#batched_U_net_graph_dict = batch_U_net_graph_dict(jraph_graph_dict["U_net_graph_dict"])
 			#batched_U_net_graph_dict_2 = pmap_batch_U_net_graph_dict_and_pad(jraph_graph_dict["U_net_graph_dict"])
 			input_graph_list, energy_graphs = self._prepare_graphs(jraph_graph_dict)
-
-			if(False):
-				axis = 1
-				batched_U_net_graph_dict = pmap_batch_U_net_graph_dict_and_pad(jraph_graph_dict["U_net_graph_dict"], self.pad_k)
-				graph_size_dict = {}
-				for graph_types in batched_U_net_graph_dict.keys():
-					graph_size_dict[graph_types] = {"edges": [[] for _ in range(iters)], "nodes": [[] for _ in range(iters)]}
-
-
-				graph_shape_list = []
-				for rep in range(reps):
-					for j, jraph_graph_dict in enumerate(self.dataloader_train):
-						i = len(self.dataloader_train)*rep + j
-						batched_U_net_graph_dict = pmap_batch_U_net_graph_dict_and_pad(jraph_graph_dict["U_net_graph_dict"], k=1.2)
-						graph_shape = jax.tree_map(lambda x: x.shape, batched_U_net_graph_dict)
-						graph_shape_list.append(graph_shape)
-						print("len graph shape list", len(dict_count.count_same_dicts(graph_shape_list)), i)
-
-						for graph_types in batched_U_net_graph_dict.keys():
-
-							#print(graph_types, type(batched_U_net_graph_dict[graph_types]))
-							if(graph_types != "bottleneck_graph"):
-								for layer_graph in batched_U_net_graph_dict[graph_types]:
-									#print(layer_graph.nodes.shape, layer_graph.edges.shape, layer_graph.globals.shape)
-									graph_size_dict[graph_types]["edges"][i].append(layer_graph.nodes.shape[axis])
-									graph_size_dict[graph_types]["nodes"][i].append(layer_graph.edges.shape[axis])
-							else:
-								layer_graph = batched_U_net_graph_dict[graph_types]
-								#print(layer_graph.nodes.shape, layer_graph.edges.shape, layer_graph.globals.shape)
-								graph_size_dict[graph_types]["edges"][i].append(layer_graph.nodes.shape[axis])
-								graph_size_dict[graph_types]["nodes"][i].append(layer_graph.edges.shape[axis])
-
-				result = dict_count.count_same_dicts(graph_shape_list)
-				result_strings = {str(k): v for k, v in result.items()}
-
-				for idx1, el1 in enumerate(result_strings):
-					for idx2, el2 in enumerate(result_strings):
-						if(idx1 != idx2):
-							difference = dict_count.compare_and_replace(el1, el2)
-							print(el1)
-							print(el2)
-							print(el1 == el2)
-							print(difference)
-							print("\n")
-
-				for idx, key in enumerate(graph_size_dict.keys()):
-					plt.figure()
-					for list_idx in range(len(graph_size_dict[key]["edges"])):
-						plt.subplot(2,1,1)
-						plt.title(key + " edges " )
-						x_edges = np.arange(0, len(graph_size_dict[key]["edges"][list_idx]))
-						y_edges = graph_size_dict[key]["edges"][list_idx]
-						y_nodes = graph_size_dict[key]["edges"][list_idx]
-						plt.plot(x_edges, y_edges, "-x", label = "edges")
-						plt.yscale("log")
-						plt.subplot(2,1,2)
-						plt.title(key + " nodes " )
-						plt.plot(x_edges, y_nodes, "-x", label = "nodes")
-						plt.yscale("log")
-				plt.show()
-				plt.close("all")
-				raise ValueError("")
-
 
 			#node_features = self.n_diffusion_steps + self.n_random_node_features + self.n_bernoulli_features
 

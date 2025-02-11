@@ -116,6 +116,7 @@ The following model weights are made available:
 | MaxCl           | RB_small  | k1zc0zgg   | yxyr9urj   | l3s6eybg   |
 | MIS             | RB_small  | m3h9mz5g   | olqaqfnl   | 08i3m2dl   |
 | MIS             | RB_large  | cvv1wla0   | fuu10c4p   | 00qoqw0s   |
+| MDS             | BA_small  | ydq3mn05   | xzc9mds3   | gk5s4nar   |
 | MDS             | BA_large  | 64dnrg5p   | 107hsfqv   | 0liz28ec   |
 | MaxCut          | BA_small  | 114mqmhk   | t2ud5ttf   | icuxbpll   |
 | MaxCut          | BA_large  | ubti92kx   | c11rjsun   | c6yoqwmp   |
@@ -125,22 +126,24 @@ The following model weights are made available:
 
 | CO Problem Type | Dataset   | Seed 1     | Seed 2     | Seed 3     |
 |-----------------|-----------|------------|------------|------------|
-| MaxCl           | RB_small  |    |    |    |
-| MIS             | RB_small  |    |    |    |
-| MIS             | RB_large  |    |    |    |
-| MDS             | BA_large  |    |    |    |
-| MaxCut          | BA_small  |    |    |    |
-| MaxCut          | BA_large  |    |    |    |
+| MaxCl           | RB_small  |  5uvh7t41  |  l3ricjby  |   flbniwwf |
+| MIS             | RB_small  |  zk3wkaap  |  91icd2vu  |  fj1lym7o  |
+| MIS             | RB_large  |  rj161hwt  |  eh5td2pi  |  c8d4u3uo  |
+| MDS             | BA_small  |   qfrf58hx |   2ll1wcw1 |  4rgz2hck  |
+| MDS             | BA_large  |  t95aukxn  |  ukunkwov  |  x2z3k811  |
+| MaxCut          | BA_small  |  9wstv9tl  |   m5l9z4j6 |  nka5ez0d  |
+| MaxCut          | BA_large  |  oi3fyq7w  |  4qmwye2w  |  6irzwfyk  |
+
 
 - Weights for SDDS: w/ MC from the SDDS paper
 
-
 | CO Problem Type | Dataset   | Seed 1     | Seed 2     | Seed 3     |
 |-----------------|-----------|------------|------------|------------|
-| MaxCl           | RB_small  |    |    |    |
-| MIS             | RB_small  |    |    |    |
-| MIS             | RB_large  |    |    |    |
-| MDS             | BA_large  |    |    |    |
-| MaxCut          | BA_small  |    |    |    |
-| MaxCut          | BA_large  |    |    |    |
+| MaxCl           | RB_small  |   ud133dhi |  yp999f1m  |  thpyvtjx  |
+| MIS             | RB_small  |  otpu58r3  |   9xoy68e6 |  w3u4cer6  |
+| MIS             | RB_large  |  6rrd7m5b  |  rjcm5oto  | lgo8u2aq   |
+| MDS             | BA_small  |  a7zogxmh  |   df9rgk6a |  yjwopr68  |
+| MDS             | BA_large  | x3mdgetb   |  cpg13tch  |   05juku5c |
+| MaxCut          | BA_small  |  8ah3bsvm  |   c1l3z0d4 |   s2ug6f2y |
+| MaxCut          | BA_large  |  r3ils8y0  |  qidpkk4j  |  96u1z4mu  |
 

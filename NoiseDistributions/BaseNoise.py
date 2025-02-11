@@ -40,6 +40,8 @@ class BaseNoiseDistr(ABC):
     def calculate_noise_distr_reward(self):
         pass
 
+    def sample_forward_diff_process(self):
+        raise ValueError("calc_noise_step_relaxed function not implemented")
 
     def calc_noise_step_relaxed(self):
         raise ValueError("calc_noise_step_relaxed function not implemented")

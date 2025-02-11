@@ -322,7 +322,7 @@ class PPO(Base):
         out_dict["spin_logits_next"] = spin_logits_next
         return scan_dict, out_dict
 
-    @partial(jax.jit, static_argnums=(0,-1))
+    @partial(jax.jit, static_argnums=(0,6))
     def _environment_steps_scan(self, params, graphs, energy_graph_batch, T, key, mode):
         ### TDOD cahnge rewards to non exact expectation rewards
         print("scan function is being jitted")

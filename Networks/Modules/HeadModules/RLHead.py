@@ -59,6 +59,7 @@ class RLHeadModule_agg_after(nn.Module):
     @param num_features_list: list of the number of features in the layers (number of nodes); Example: [32, 32, 2] -> two hidden layers with 32 nodes and an output layer with 2 nodes
     """
     n_features_list_prob: np.ndarray
+    dtype: any
 
     def setup(self):
         self.probMLP = ProbMLP(n_features_list=self.n_features_list_prob)
@@ -98,30 +99,35 @@ class RLHeadModuleTSP(nn.Module):
     @param num_features_list: list of the number of features in the layers (number of nodes); Example: [32, 32, 2] -> two hidden layers with 32 nodes and an output layer with 2 nodes
     """
     n_features_list_prob: np.ndarray
+    dtype: any
 
     def setup(self):
-        self.probMLP = ProbMLP(n_features_list=self.n_features_list_prob)
+        self.probMLP = ProbMLP(n_features_list=self.n_features_list_prob, dtype= self.dtype)
         value_feature_list = [120, 120, 1]
-        self.ValueMLP = ValueMLP(n_features_list=value_feature_list)
+        self.ValueMLP = ValueMLP(n_features_list=value_feature_list, dtype= self.dtype)
 
     @partial(flax.linen.jit, static_argnums=0)
     def __call__(self,jraph_graph_list, x, out_dict) -> jnp.ndarray:
         """
         forward pass though MLP
-        @param x: input data as jax numpy array
+        @param x: input data as jax numpy array (batch_size, 1, n_cities, n_features)
         """
         x_aggr = jnp.mean(x, axis = -2, keepdims=True)
         rep_x_aggr = jnp.repeat(x_aggr, x.shape[-2], axis = -2)
         x = jnp.concatenate([x, rep_x_aggr], axis = -1)
-        spin_logits = self.probMLP(x)[:,0,...]
+        
+        spin_logits = self.probMLP(x)
+        spin_logits = spin_logits[:,0,...]
 
         Values = self.ValueMLP(x_aggr)
         Values = Values[..., 0, 0]
 
-        spin_logits = jnp.reshape(spin_logits, (spin_logits.shape[0]*spin_logits.shape[1],) + (1,spin_logits.shape[-1]))
-        Values = jnp.reshape(Values, (Values.shape[0]*Values.shape[1],) + Values.shape[2:])
+        padded_spin_logits = jnp.concatenate([spin_logits, jnp.zeros((1, *spin_logits.shape[1:]))], axis = 0)
+        padded_values = jnp.concatenate([Values, jnp.zeros((1, *Values.shape[1:]))], axis = 0)
 
-
-        out_dict["spin_logits"] = spin_logits
-        out_dict["Values"] = Values
+        spin_logits = jnp.reshape(padded_spin_logits, (padded_spin_logits.shape[0]*padded_spin_logits.shape[1],) + (1,padded_spin_logits.shape[-1]))
+        Values = jnp.reshape(padded_values, (padded_values.shape[0]*padded_values.shape[1],) + padded_values.shape[2:])
+        
+        out_dict["spin_logits"] = padded_spin_logits
+        out_dict["Values"] = padded_values
         return out_dict

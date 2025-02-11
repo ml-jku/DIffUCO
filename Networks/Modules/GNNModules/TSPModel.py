@@ -58,6 +58,9 @@ class TSPModel(nn.Module):
 		"""
 		nodes = X_prev
 		jraph_graph = jraph_graph_list["graphs"][0]
+
+
+		### TODO remove dummy batch
 		nodes_encoded = self.node_encoder(nodes)
 		jraph_graph = jraph_graph._replace(nodes=nodes_encoded)
 
@@ -66,5 +69,7 @@ class TSPModel(nn.Module):
 			jraph_graph = message_pass(jraph_graph)
 
 		decoded_nodes = self.node_decoder(jraph_graph.nodes)
+		### TODO add dummy batch
 		return decoded_nodes
+	
 
