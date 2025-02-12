@@ -87,7 +87,8 @@ args = parser.parse_args()
 ### TODO rerun checkpoint from best checkpoint
 def meanfield_run():
 
-
+    if(args.EnergyFunction == "TSP" and args.train_mode != "PPO"):
+        raise ValueError("TSP is only implemented for PPO")
 
     resources_per_trial = 1.
     devices = args.GPUs

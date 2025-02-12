@@ -127,7 +127,7 @@ class RLHeadModuleTSP(nn.Module):
 
         spin_logits = jnp.reshape(padded_spin_logits, (padded_spin_logits.shape[0]*padded_spin_logits.shape[1],) + (1,padded_spin_logits.shape[-1]))
         Values = jnp.reshape(padded_values, (padded_values.shape[0]*padded_values.shape[1],) + padded_values.shape[2:])
-        
-        out_dict["spin_logits"] = padded_spin_logits
-        out_dict["Values"] = padded_values
+        print("RL_head", spin_logits.shape, Values.shape)
+        out_dict["spin_logits"] = spin_logits
+        out_dict["Values"] = Values
         return out_dict
