@@ -4,12 +4,12 @@ from train import TrainMeanField
 
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--wandb_ids', default = ["7knl4x32"],type = str, help='wandb ids', nargs = "+")
+parser.add_argument('--wandb_ids', default = ["qkfzunur"],type = str, help='wandb ids', nargs = "+")
 parser.add_argument('--GPUs', default=["0"], type = str, help='Define Nb', nargs = "+")
 parser.add_argument('--memory', default=0.92, type = float, help="GPU memory")
 parser.add_argument('--expl', default=[0.], type = float, help="amount of exploration", nargs = "+")
 parser.add_argument('--seeds', default=1, type = int, help="num_seeds")
-parser.add_argument('--n_sampling_rounds', default=1000, type = int, help="Number of sampling rounds")
+parser.add_argument('--n_sampling_rounds', default=10, type = int, help="Number of sampling rounds")
 parser.add_argument('--sampling_modes', default=["temps"], type = str, help="eps or temps", nargs = "+")
 parser.add_argument('--n_test_basis_states', default=400, type = int, help="eps or temps")
 args = parser.parse_args()

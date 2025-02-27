@@ -23,11 +23,8 @@ Some packages will be installed but the installation of jax will run into an err
 Therefore, continue isntalling all missing packages by following the instructions below:
 
 ```
-conda activate rayjay_clone
-pip install --upgrade "jax[cuda12_pip]" -f https://storage.googleapis.com/jax-releases/jax_cuda_releases.html
-pip install tqdm jraph matplotlib tqdm optax
+conda activate DiffUCO
 pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
-pip install flax==0.8.1 igraph unipath wandb==0.15.0
 ```
 
 For the creation of the TSP dataset `pyconcorde` has to be installed.

@@ -102,6 +102,7 @@ class Base(ABC):
             else:
                 raise NotImplementedError(
                     'Dataset name must contain either "4", "8", "16", "24", "32" to infer the number of nodes')
+            
             print(f"beta: {self.beta}")
             self.free_energy = self.calculate_ising_free_energy(self.beta, self.size)
             self.internal_energy = self.calculate_ising_internal_energy(self.beta, self.size)
@@ -194,9 +195,7 @@ class Base(ABC):
             for i in tqdm(range(n_sampling_rounds)):
                 subkey = jax.random.fold_in(key, i)
                 batched_key = jax.random.split(subkey, num=len(jax.devices()))
-                # if(sampling_mode == "eps"):
-                #     result_dict = self.pmap_sample_for_estimate_v2(params, graph_batch, energy_graph_batch, self.T_target, self.sampling_temp, batched_key)
-                # else:
+
                 result_dict = self.pmap_sample_for_estimate(params, graph_batch, energy_graph_batch, self.T_target, self.sampling_temp, batched_key)
 
                 energies.append(result_dict["energies"])
@@ -210,6 +209,7 @@ class Base(ABC):
             esimate_dict = self.unbiased_estimates(log_p, log_q, energies)
 
             X_0 = result_dict["X_0"]
+            X_sequences = result_dict["X_sequences"]
             log_dict["energies"]["unbiased_free_energy"] = esimate_dict["free_energies"][-1]
             log_dict["energies"]["unbiased_internal_energy"] = esimate_dict["internal_energies"][-1]
             log_dict["energies"]["unbiased_entropy"] = esimate_dict["entropies"][-1]
@@ -235,7 +235,7 @@ class Base(ABC):
             for mag_key in Magnetization_dict:
                 log_dict["energies"][mag_key] = Magnetization_dict[mag_key]
 
-            log_dict["figures"]["Ising_states"] = {"X_0": States, "type": "Ising"}
+            log_dict["figures"]["Ising_states"] = {"X_0": States, "type": "Ising", "X_sequences": X_sequences}
             log_dict["figures"]["free_energies"] = {"type": "Ising", "y_axis": esimate_dict["free_energies"], "x_axis": esimate_dict["n_states"] , "baseline": self.free_energy}
             log_dict["figures"]["internal_energies"] = {"type": "Ising", "y_axis": esimate_dict["internal_energies"], "x_axis": esimate_dict["n_states"],  "baseline": self.internal_energy}
             log_dict["figures"]["entropies"] = {"type": "Ising", "y_axis": esimate_dict["entropies"], "x_axis": esimate_dict["n_states"],  "baseline": self.entropy}
@@ -405,7 +405,7 @@ class Base(ABC):
         }
         return result_dict
 
-    @partial(jax.jit, static_argnums=(0, -1))
+    @partial(jax.jit, static_argnums=(0,-1))
     def _environment_steps_scan_estimate(self, params, graphs, energy_graph_batch, T, eps, key):
         ### TDOD cahnge rewards to non exact expectation rewards
         print("scan function is being jitted")
