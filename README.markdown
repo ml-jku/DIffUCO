@@ -19,8 +19,7 @@ To install the environment fist run
 conda env create -f environment.yml
 ```
 
-Some packages will be installed but the installation of jax will run into an error.
-Therefore, continue isntalling all missing packages by following the instructions below:
+Continue isntalling all missing packages by following the instructions below:
 
 ```
 conda activate DiffUCO
