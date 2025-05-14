@@ -19,15 +19,11 @@ To install the environment fist run
 conda env create -f environment.yml
 ```
 
-Some packages will be installed but the installation of jax will run into an error.
-Therefore, continue isntalling all missing packages by following the instructions below:
+Continue isntalling all missing packages by following the instructions below:
 
 ```
-conda activate rayjay_clone
-pip install --upgrade "jax[cuda12_pip]" -f https://storage.googleapis.com/jax-releases/jax_cuda_releases.html
-pip install tqdm jraph matplotlib tqdm optax
+conda activate DiffUCO
 pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
-pip install flax==0.8.1 igraph unipath wandb==0.15.0
 ```
 
 For the creation of the TSP dataset `pyconcorde` has to be installed.
@@ -108,6 +104,8 @@ All configs from the paper SDDS can be found in argparse/experiments/Ising for e
 
 ### model weights:
 The following model weights are made available:
+
+#### Weights on Combinatorial Optimization Problems:
 - Weights for DiffUCO from the SDDS paper
 
 
@@ -135,7 +133,7 @@ The following model weights are made available:
 | MaxCut          | BA_large  |  oi3fyq7w  |  4qmwye2w  |  6irzwfyk  |
 
 
-- Weights for SDDS: w/ MC from the SDDS paper
+- Weights for SDDS: fKL w/ MC from the SDDS paper
 
 | CO Problem Type | Dataset   | Seed 1     | Seed 2     | Seed 3     |
 |-----------------|-----------|------------|------------|------------|
@@ -146,4 +144,34 @@ The following model weights are made available:
 | MDS             | BA_large  | x3mdgetb   |  cpg13tch  |   05juku5c |
 | MaxCut          | BA_small  |  8ah3bsvm  |   c1l3z0d4 |   s2ug6f2y |
 | MaxCut          | BA_large  |  r3ils8y0  |  qidpkk4j  |  96u1z4mu  |
+
+#### Weights on Statistical Physics Problems:
+
+| Ising Model 24x24 | Weight Id  | 
+|-----------------|-----------|
+| fKL w/ MC         |   qkfzunur |
+| rKL w/ RL            |  ewmsen06 or sw5qr5e6  |
+
+| Spin Glasses 15x15   | Weight Id     | 
+|-----------------|------------|
+| fKL w/ MC   |   4hl3jr35 |
+| rKL w/ RL   |  sw5qr5e6  | 
+
+
+#### How to evaluate these models:
+evauation can be ran with the following command:
+
+```
+python evaluate_unbiased_sampling.py --wandb_id <WANDB_ID>  --GPU 0 --n_sampling_rounds 400 --seeds 9  --n_test_basis_states 1200
+```
+
+### parameter explanation
+`--wandb_id` wandb_id of the model weights \
+`--GPU` ID of the GPU \
+`--n_sampling_rounds` number of sampling repetitions\
+`--n_test_basis_states` the number of samples in each sampling round\
+`--seeds` Number of seeds over which the results will be averaged\
+
+n_sampling_rounds*n_test_basis_states will be the amount of overall samples
+
 

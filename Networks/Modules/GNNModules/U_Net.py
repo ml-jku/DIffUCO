@@ -54,9 +54,9 @@ class UpBlock(nn.Module):
 @partial(jax.jit, static_argnums=1)
 def reshape_to_grid(x, size):
     x_new = x[:-1]
-    pos_x, pos_y = jnp.meshgrid(jnp.arange(size), jnp.arange(size), indexing='ij')
+    #pos_x, pos_y = jnp.meshgrid(jnp.arange(size), jnp.arange(size), indexing='ij')
     x_resh = x_new.reshape(size,size, x_new.shape[-1])
-    x_resh = jnp.concatenate([x_resh, pos_x[...,jnp.newaxis]/size - 0.5, pos_y[...,jnp.newaxis]/size - 0.5], axis = -1)
+    #x_resh = jnp.concatenate([x_resh, pos_x[...,jnp.newaxis]/size - 0.5, pos_y[...,jnp.newaxis]/size - 0.5], axis = -1)
 
     return x_resh
 

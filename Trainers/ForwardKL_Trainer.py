@@ -73,6 +73,7 @@ class ForwardKL(Base):
         self.vmapped_calc_log_p = jax.vmap(self.NoiseDistrClass.get_log_p_T_0, in_axes=(None, 1, 1, None, None))
         self.forw_KL_loss_grad = jax.jit(jax.value_and_grad(self.get_loss, has_aux=True))
         self.pmap_forw_KL_loss_backward = jax.pmap(self.loss_backward, in_axes=(0, 0, 0, 0,0), axis_name="device")
+
         self.pmap_sample_X_sequence = jax.pmap(lambda a,b,c,d,e: self.sample_X_sequence(a,b,c,d,e, "train"), in_axes=(0, 0, 0, None, 0) )
         self.sample_X_sequence_eval = lambda a,b,c,d,e: self.sample_X_sequence(a,b,c,d,e, "eval")
 
@@ -252,8 +253,7 @@ class ForwardKL(Base):
             N_basis_states = self.N_test_basis_states
 
         overall_diffusion_steps = self.n_diffusion_steps * self.eval_step_factor
-        X_prev, log_q_T, one_hot_state, log_p_uniform, key  = self.model.sample_prior_w_probs(energy_graph_batch, N_basis_states,
-                                                                            key)
+        X_prev, log_q_T, one_hot_state, log_p_uniform, key  = self.model.sample_prior_w_probs(energy_graph_batch, N_basis_states, key)
 
         n_graphs = energy_graph_batch.n_node.shape[0]
 
@@ -395,7 +395,7 @@ class ForwardKL(Base):
         out_dict["spin_logits_next"] = spin_logits_next
         return scan_dict, out_dict
 
-    @partial(jax.jit, static_argnums=(0,-1))
+    #@partial(jax.jit, static_argnums=(0,6))
     def _environment_steps_scan(self, params, graphs, energy_graph_batch, T, key, mode):
         ### TDOD cahnge rewards to non exact expectation rewards
         print("scan function is being jitted")

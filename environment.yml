@@ -1,4 +1,4 @@
-name: rayjay_clone
+name: DiffUCO
 channels:
   - nvidia
   - conda-forge
@@ -131,9 +131,6 @@ dependencies:
     - tensorstore==0.1.63
     - texttable==1.7.0
     - toolz==0.12.1
-    - torch==2.3.1+cpu
-    - torchaudio==2.3.1+cpu
-    - torchvision==0.18.1+cpu
     - tqdm==4.66.4
     - tzdata==2024.1
     - unipath==1.1

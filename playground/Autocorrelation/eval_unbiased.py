@@ -261,19 +261,25 @@ if __name__ == "__main__":
         print("final MCMC energy", np.mean(MCMC_energies), np.std(MCMC_energies)/np.sqrt(len(MCMC_energies)))
         return log_dict
 
-    # run_id = "qkfzunur"
-    # plot_result_dict(run_id)
+    #ISING?
+    
+    ## FKL
+    run_id = "qkfzunur"
+    plot_result_dict(run_id)
+    raise ValueError("stop")
 
+    #PPO
     # run_id = "ewmsen06"
     # plot_result_dict(run_id)
-
-    # REINFORCE
-    run_id = "m7fi604s"
-    plot_result_dict(run_id)
 
     # # PPO
     # run_id = "sw5qr5e6"
     # plot_result_dict(run_id)
+
+    ### SPIN GLASSES ?
+    # REINFORCE
+    run_id = "m7fi604s"
+    plot_result_dict(run_id)
 
     # PPO
     run_id = "5j75a3k9"

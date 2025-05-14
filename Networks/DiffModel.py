@@ -137,7 +137,6 @@ class DiffModel(nn.Module):
 
 		X_next, spin_log_probs, key = self.sample_from_model( spin_logits, key)
 		
-		print(n_graph, spin_log_probs.shape, n_node.shape, node_graph_idx.shape)
 		graph_log_prob = jax.lax.stop_gradient(jnp.exp((self.__get_log_prob(spin_log_probs[...,0], node_graph_idx, n_graph)/(n_node))[:-1]))
 		out_dict["X_next"] = X_next
 		out_dict["spin_log_probs"] = spin_log_probs
