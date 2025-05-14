@@ -197,11 +197,14 @@ def seconds_to_hms(seconds):
 def calc_mean_and_std(wandb_id_dict, ret_func):
     method_result_dict = {}
     for wandb_key in wandb_id_dict.keys():
+        print(wandb_key)
         method_result_dict[wandb_key] = {}
         wanb_id_list = wandb_id_dict[wandb_key]
         results = {}
 
         for wandb_id in wanb_id_list:
+            print(f"!Checkpoints/{wandb_id}/{wandb_id}_last_epoch.pickle")
+            print(f"!Checkpoints/{wandb_id}/best_{wandb_id}.pickle")
             result_dict = ret_func(wandb_id)
 
             for key in result_dict.keys():
@@ -219,12 +222,12 @@ def calc_mean_and_std(wandb_id_dict, ret_func):
                 std_time = time.strftime('%H:%M:%S',
                                          time.gmtime(np.mean(np.std(results[key]) / np.sqrt(len(results[key])))))
                 #print("time list", results[key])
-                print(key, "$", mean_time, "\pm", std_time, "$")
+                #print(key, "$", mean_time, "\pm", std_time, "$")
 
             else:
                 method_result_dict[wandb_key][key] = results[key]
                 #print(wandb_key, key, "$", np.round(results[key], decimals=2))
-                print(wandb_key, key , "$",np.round(np.mean(results[key]), decimals=2), "\pm ", np.round(np.std(results[key])/np.sqrt(len(results[key])), decimals = 2) , "$", len(results[key]))
+                #print(wandb_key, key , "$",np.round(np.mean(results[key]), decimals=2), "\pm ", np.round(np.std(results[key])/np.sqrt(len(results[key])), decimals = 2) , "$", len(results[key]))
 
     # for method_key in method_result_dict.keys():
     #     for method_key_2 in method_result_dict.keys():
@@ -349,4 +352,5 @@ if(__name__ == "__main__"):
     best_energy_runs(GPU_num="3")
     mean_energy_runs(GPU_num="6",batch_size = 30)
     #measure_time_runs(GPU_num="6", filter = "rKL")
+
 

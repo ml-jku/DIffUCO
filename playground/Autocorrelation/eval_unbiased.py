@@ -264,8 +264,9 @@ if __name__ == "__main__":
     #ISING?
     
     ## FKL
-    # run_id = "qkfzunur"
-    # plot_result_dict(run_id)
+    run_id = "qkfzunur"
+    plot_result_dict(run_id)
+    raise ValueError("stop")
 
     #PPO
     # run_id = "ewmsen06"
