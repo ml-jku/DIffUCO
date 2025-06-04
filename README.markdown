@@ -31,6 +31,9 @@ For that follow the instructions on:
 https://github.com/jvkersch/pyconcorde
 
 
+## Ising Theory Baselines:
+To compute the Ising Theory Baselines we provide a simple script in [/IsingTheoryBaselines/IsingTheory.py](/IsingTheoryBaselines/IsingTheory.py)
+
 ## Getting started
 - get started by creating a dataset with the DatasetCreator
 ```
@@ -158,7 +161,7 @@ The following model weights are made available:
 | rKL w/ RL   |  sw5qr5e6  | 
 
 
-#### How to evaluate these models:
+#### How to evaluate models in unbiased sampling:
 evauation can be ran with the following command:
 
 ```
@@ -172,6 +175,9 @@ python evaluate_unbiased_sampling.py --wandb_id <WANDB_ID>  --GPU 0 --n_sampling
 `--n_test_basis_states` the number of samples in each sampling round\
 `--seeds` Number of seeds over which the results will be averaged\
 
-n_sampling_rounds*n_test_basis_states will be the amount of overall samples
+For NIS overall <n_sampling_rounds> x <n_test_basis_states> samples will be used to compute the observables.
+For NMCMC <n_test_basis_states> are the number of states in the buffer and MCMC updates are performed over <n_sampling_rounds>.
+
+The script in playground/Autocorrelation/eval_unbiased.py can then be used to load the results after "running evaluate_unbiased_sampling.py".
 
 

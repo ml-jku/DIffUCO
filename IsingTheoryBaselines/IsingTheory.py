@@ -117,7 +117,7 @@ def csch( x):
     """
     return 1 / np.sinh(x, dtype=np.float64)
 
-if(__name__== "__main__"):
+def make_plots():
     from matplotlib import pyplot as plt
 
     L = 16
@@ -151,7 +151,13 @@ if(__name__== "__main__"):
 
     plt.show()
 
+if(__name__== "__main__"):
+
+
     beta = 0.4407
-    L = 16
-    print("Energy Value",calculate_ising_internal_energy(beta, L), calculate_ising_free_energy(beta, L))
-    pass
+    Ls = [16,24]
+    for L in Ls:
+        beta = 0.4407
+        print("Lattice Size", L, "x", L)
+        print("Internal Energy", calculate_ising_internal_energy(beta, L))
+        print("Energy Value", calculate_ising_free_energy(beta, L))
