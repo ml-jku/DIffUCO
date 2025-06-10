@@ -26,9 +26,12 @@ conda activate DiffUCO
 pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
 ```
 
-For the creation of the TSP dataset `pyconcorde` has to be installed.
+####  <u>Optional step: </u>
+TSP (Travelor Salesman Person) results never managed it into the paper but if anyone is interested in that problem type `pyconcorde` has to be installed.
 For that follow the instructions on:
 https://github.com/jvkersch/pyconcorde
+
+
 
 
 ## Ising Theory Baselines:
